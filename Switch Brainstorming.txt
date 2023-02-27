@@ -1,0 +1,16 @@
+Switch Brainstorming
+
+// If you want to print out cards each turn or something
+// ♦︎♣︎♥︎♠︎♢♧♡♤
+
+Immediate concern #1: the bool knownToYou makes the card known to *every* player, rather than just you. Now you need to come up with a way to make each card known on a per-player basis, which would be necessary for the hardAI function so it can determine the most optimal moves
+
+Immediate concern #2: Implement a tie thing
+
+Immediate concern #3: Make the AI look at two of their cards at the start of their first turn
+
+So we got an easy and a hard; easy is completely probability-based, weighted towards more bad decisions than good (maybe 40-60?), and hard is the "objective" right move given the information the player has known to them
+
+Now we move onto the harder one — I was thinking we could just change the above AI function into easyAI, and make the new one hardAI, and then to make a "medium" version of the AI, have a mediumAI that does a 50-50 between easy/hard to make its moves, while the hardAI makes the absolute best moves possible (or maybe like 70-30, I guess)
+
+For that, you'd need to check what cards are known and not known constantly, keep in mind which players have which cards if they swap with the stack or use the Jack, be ready to eliminate the cards as necessary, and so on, you'll probably think of all of them once you actually start to do it
