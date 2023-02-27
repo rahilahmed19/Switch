@@ -1019,8 +1019,6 @@ int main() {
 	finalRound(playerTurn, wait, knock, Deck, Stack, P1, P2, P3, P4);
 
 	winner(P1, P2, P3, P4);
-
-	// fuck off and die
 	
 	return 0;
 }
