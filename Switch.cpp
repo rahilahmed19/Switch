@@ -568,9 +568,9 @@ class Player {
 					
 					else { cin >> position; position--; }
 
-					Temp = Hand.at(position); selfKnown(Hand.at(position), name);
+					selfKnown(Hand.at(position), name);
 
-					cout << "\nThe card is: " << endl; printCard(Temp, name);
+					cout << "\nThe card is: " << endl; printCard(Hand.at(position), name);
 					break;
 				
 				case 9:
