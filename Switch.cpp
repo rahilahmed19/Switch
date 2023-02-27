@@ -8,6 +8,8 @@
 #include <time.h>
 using namespace std;
 
+// Main
+
 class Card {
 	public:
 		string name, suit; int point, power; // Only exists for the Power Card function, to help differentiate between the face cards
