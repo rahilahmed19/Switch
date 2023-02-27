@@ -971,7 +971,7 @@ int main() {
 
 	vector<Player> Players{P1, P2, P3, P4}; vector<Card> Stack; srand(time(NULL));
 
-	bool knock = false; int playerTurn, wait = 0; string SorM = "";
+	bool knock = false; int playerTurn = 0; int wait = 0; string SorM = "";
 
 	for (int i = 0; i < Deck.size(); i++) {
 		Deck.at(i).knownToP1 = false;
