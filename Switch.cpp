@@ -1020,7 +1020,7 @@ int main() {
 
 	winner(P1, P2, P3, P4);
 
-	// Lmao test test
+	// fuck off and die
 	
 	return 0;
 }
