@@ -399,26 +399,6 @@ class Player {
 					else { cout << " ——————— , "; }
 				}
 			}
-
-			for (int i = 0; i < Hand.size(); i++) {
-				cout << Hand.at(i).name << ", ";
-			}
-			cout << "\n" << endl;
-
-			for (int i = 0; i < Hand.size(); i++) {
-				cout << "Card " << i + 1 << ": " << endl;
-				if (Hand.at(i).knownToP2) {
-					cout << "Player 2 knows, ";
-				}
-				if (Hand.at(i).knownToP3) {
-					cout << "Player 3 knows, ";
-				} 
-				if (Hand.at(i).knownToP4) {
-					cout << "Player 4 knows";
-				}
-				cout << endl;
-			}
-			
 		}
 		
 		void switchNT(int& player, int& card, Player& P1, Player& P2, Player& P3, Player& P4) {
