@@ -1,12 +1,13 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
-#include <iterator>
-#include <algorithm>
+#include<iterator>
 #include <random>
 #include <unistd.h>
 #include <time.h>
 using namespace std;
+
+// Main
 
 class Card {
 	public:
@@ -511,24 +512,28 @@ class Player {
 			if (name == "Player 1") {
 				if (Temp.knownToP1) {
 					Hand.at(position).knownToP1 = true;
+					cout << "lmao1" << endl;
 				}
 			}
 
 			if (name == "Player 2") {
 				if (Temp.knownToP2) {
 					Hand.at(position).knownToP2 = true;
+					cout << "lmao2" << endl;
 				}
 			}
 
 			if (name == "Player 3") {
 				if (Temp.knownToP3) {
 					Hand.at(position).knownToP3 = true;
+					cout << "lmao3" << endl;
 				}
 			}
 
 			if (name == "Player 4") {
 				if (Temp.knownToP4) {
 					Hand.at(position).knownToP4 = true;
+					cout << "lmao4" << endl;
 				}
 			}
 		}
@@ -547,9 +552,9 @@ class Player {
 					
 					else { cin >> position; position--; }
 
-					Temp = Hand.at(position); selfKnown(Hand.at(position), name);
+					selfKnown(Hand.at(position), name);
 
-					cout << "\nThe card is: " << endl; printCard(Temp, name);
+					cout << "\nThe card is: " << endl; printCard(Hand.at(position), name);
 					break;
 				
 				case 8:
@@ -563,9 +568,9 @@ class Player {
 					
 					else { cin >> position; position--; }
 
-					Temp = Hand.at(position); selfKnown(Hand.at(position), name);
+					selfKnown(Hand.at(position), name);
 
-					cout << "\nThe card is: " << endl; printCard(Temp, name);
+					cout << "\nThe card is: " << endl; printCard(Hand.at(position), name);
 					break;
 				
 				case 9:
@@ -950,7 +955,7 @@ int main() {
 
 	vector<Player> Players{P1, P2, P3, P4}; vector<Card> Stack; srand(time(NULL));
 
-	bool knock = false; int playerTurn, wait = 0; string SorM = "";
+	bool knock = false; int playerTurn = 0; int wait = 0; string SorM = "";
 
 	for (int i = 0; i < Deck.size(); i++) {
 		Deck.at(i).knownToP1 = false;
@@ -977,36 +982,61 @@ int main() {
 
 	P1.Hand.at(position1).knownToP1 = true; P1.Hand.at(position2).knownToP1 = true;
 
-	for (int i = 0; i < P1.Hand.size(); i++) {
-		if (i == position1 || i == position2) {
-			continue;
-		}
-		else {
-			P1.Hand.at(i).knownToP1 = false;
-		}
-	}
-
-	cout << "\nHere are your (known) cards:\n" << endl; P1.printHand(P1.name);
+	cout << "\nHere are your (known) cards:" << endl; P1.printHand(P1.name);
 
 	while (!knock) {
 		switch (playerTurn % 4) {
 			case 0:
 				cout << "\nPlayer 1's turn:" << endl;
+				
 				P1.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 1:
 				cout << "\nPlayer 2's turn:" << endl;
+
+				if (playerTurn < 4 && SorM == "M") {
+					cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
+
+					cin >> position1 >> position2; position1--; position2--;
+
+					P2.Hand.at(position1).knownToP2 = true; P2.Hand.at(position2).knownToP2 = true;
+
+					cout << "\nHere are your (known) cards:" << endl; P2.printHand(P2.name);
+				}
+
 				P2.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 2:
 				cout << "\nPlayer 3's turn:" << endl;
+
+				if (playerTurn < 4 && SorM == "M") {
+					cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
+
+					cin >> position1 >> position2; position1--; position2--;
+
+					P3.Hand.at(position1).knownToP3 = true; P3.Hand.at(position2).knownToP3 = true;
+
+					cout << "\nHere are your (known) cards:" << endl; P3.printHand(P3.name);
+				}
+
 				P3.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 3:
 				cout << "\nPlayer 4's turn:" << endl;
+
+				if (playerTurn < 4 && SorM == "M") {
+					cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
+
+					cin >> position1 >> position2; position1--; position2--;
+
+					P4.Hand.at(position1).knownToP4 = true; P4.Hand.at(position2).knownToP4 = true;
+
+					cout << "\nHere are your (known) cards:" << endl; P4.printHand(P4.name);
+				}
+
 				P4.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
