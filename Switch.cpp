@@ -512,24 +512,28 @@ class Player {
 			if (name == "Player 1") {
 				if (Temp.knownToP1) {
 					Hand.at(position).knownToP1 = true;
+					cout << "lmao1" << endl;
 				}
 			}
 
 			if (name == "Player 2") {
 				if (Temp.knownToP2) {
 					Hand.at(position).knownToP2 = true;
+					cout << "lmao2" << endl;
 				}
 			}
 
 			if (name == "Player 3") {
 				if (Temp.knownToP3) {
 					Hand.at(position).knownToP3 = true;
+					cout << "lmao3" << endl;
 				}
 			}
 
 			if (name == "Player 4") {
 				if (Temp.knownToP4) {
 					Hand.at(position).knownToP4 = true;
+					cout << "lmao4" << endl;
 				}
 			}
 		}
@@ -548,9 +552,9 @@ class Player {
 					
 					else { cin >> position; position--; }
 
-					Temp = Hand.at(position); selfKnown(Hand.at(position), name);
+					selfKnown(Hand.at(position), name);
 
-					cout << "\nThe card is: " << endl; printCard(Temp, name);
+					cout << "\nThe card is: " << endl; printCard(Hand.at(position), name);
 					break;
 				
 				case 8:
