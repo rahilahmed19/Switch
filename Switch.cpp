@@ -1,8 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
-#include <iterator>
-#include <algorithm>
+#include<iterator>
 #include <random>
 #include <unistd.h>
 #include <time.h>
@@ -400,6 +399,26 @@ class Player {
 					else { cout << " ——————— , "; }
 				}
 			}
+
+			for (int i = 0; i < Hand.size(); i++) {
+				cout << Hand.at(i).name << ", ";
+			}
+			cout << "\n" << endl;
+
+			for (int i = 0; i < Hand.size(); i++) {
+				cout << "Card " << i + 1 << ": " << endl;
+				if (Hand.at(i).knownToP2) {
+					cout << "Player 2 knows, ";
+				}
+				if (Hand.at(i).knownToP3) {
+					cout << "Player 3 knows, ";
+				} 
+				if (Hand.at(i).knownToP4) {
+					cout << "Player 4 knows";
+				}
+				cout << endl;
+			}
+			
 		}
 		
 		void switchNT(int& player, int& card, Player& P1, Player& P2, Player& P3, Player& P4) {
@@ -979,36 +998,61 @@ int main() {
 
 	P1.Hand.at(position1).knownToP1 = true; P1.Hand.at(position2).knownToP1 = true;
 
-	for (int i = 0; i < P1.Hand.size(); i++) {
-		if (i == position1 || i == position2) {
-			continue;
-		}
-		else {
-			P1.Hand.at(i).knownToP1 = false;
-		}
-	}
-
-	cout << "\nHere are your (known) cards:\n" << endl; P1.printHand(P1.name);
+	cout << "\nHere are your (known) cards:" << endl; P1.printHand(P1.name);
 
 	while (!knock) {
 		switch (playerTurn % 4) {
 			case 0:
 				cout << "\nPlayer 1's turn:" << endl;
+				
 				P1.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 1:
 				cout << "\nPlayer 2's turn:" << endl;
+
+				if (playerTurn < 4 && SorM == "M") {
+					cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
+
+					cin >> position1 >> position2; position1--; position2--;
+
+					P2.Hand.at(position1).knownToP2 = true; P2.Hand.at(position2).knownToP2 = true;
+
+					cout << "\nHere are your (known) cards:" << endl; P2.printHand(P2.name);
+				}
+
 				P2.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 2:
 				cout << "\nPlayer 3's turn:" << endl;
+
+				if (playerTurn < 4 && SorM == "M") {
+					cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
+
+					cin >> position1 >> position2; position1--; position2--;
+
+					P3.Hand.at(position1).knownToP3 = true; P3.Hand.at(position2).knownToP3 = true;
+
+					cout << "\nHere are your (known) cards:" << endl; P3.printHand(P3.name);
+				}
+
 				P3.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 3:
 				cout << "\nPlayer 4's turn:" << endl;
+
+				if (playerTurn < 4 && SorM == "M") {
+					cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
+
+					cin >> position1 >> position2; position1--; position2--;
+
+					P4.Hand.at(position1).knownToP4 = true; P4.Hand.at(position2).knownToP4 = true;
+
+					cout << "\nHere are your (known) cards:" << endl; P4.printHand(P4.name);
+				}
+
 				P4.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
