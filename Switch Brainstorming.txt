@@ -3,11 +3,9 @@ Switch Brainstorming
 // If you want to print out cards each turn or something
 // ♦︎♣︎♥︎♠︎♢♧♡♤
 
-Immediate concern #1: the bool knownToYou makes the card known to *every* player, rather than just you. Now you need to come up with a way to make each card known on a per-player basis, which would be necessary for the hardAI function so it can determine the most optimal moves
+Immediate concern #1: Implement a tie thing
 
-Immediate concern #2: Implement a tie thing
-
-Immediate concern #3: Make the AI look at two of their cards at the start of their first turn
+Immediate concern #2: Make the AI look at two of their cards at the start of their first turn
 
 So we got an easy and a hard; easy is completely probability-based, weighted towards more bad decisions than good (maybe 40-60?), and hard is the "objective" right move given the information the player has known to them
 
