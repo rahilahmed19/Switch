@@ -869,13 +869,15 @@ void printPoints(vector<Card>& Hand, int& totalPoints) {
 }
 
 void tiebreaker(vector<Player>& Players, vector<Card>& Deck) {
-	int count, start = 0;
+	int count, start = 0; bool tie = false;
 	
 	for (int i = 0; i < Players.size() - 1; i++) {
 		if (Players.at(i).totalPoints == Players.at(i + 1).totalPoints) {
 			if (count == 0) { start = i + 1; } count++;
 		}
 	}
+
+	if (count != 0) { tie = true; }
 
 	switch (count) {
 		case 1:
@@ -943,11 +945,13 @@ void tiebreaker(vector<Player>& Players, vector<Card>& Deck) {
 
 	if (count != 0) { tiebreaker(Players, Deck); }
 
-	cout << "\nNow that the has been broken, let's add up the totals." << endl;
-	cout << "\nPlayer 1 has "; printPoints(Players.at(0).Hand, Players.at(0).totalPoints);
-	cout << "\nPlayer 2 has "; printPoints(Players.at(1).Hand, Players.at(1).totalPoints);
-	cout << "\nPlayer 3 has "; printPoints(Players.at(2).Hand, Players.at(2).totalPoints);
-	cout << "\nPlayer 4 has "; printPoints(Players.at(3).Hand, Players.at(3).totalPoints);
+	if (!tie) {
+		cout << "\nNow that the tie has been broken, let's add up the totals." << endl;
+		cout << "\nPlayer 1 has "; printPoints(Players.at(0).Hand, Players.at(0).totalPoints);
+		cout << "\nPlayer 2 has "; printPoints(Players.at(1).Hand, Players.at(1).totalPoints);
+		cout << "\nPlayer 3 has "; printPoints(Players.at(2).Hand, Players.at(2).totalPoints);
+		cout << "\nPlayer 4 has "; printPoints(Players.at(3).Hand, Players.at(3).totalPoints);
+	}
 }
 
 void winner(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& Deck) {
