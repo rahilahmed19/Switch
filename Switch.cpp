@@ -546,7 +546,7 @@ class Player {
 					
 					if (isAI) { 
 						cout << "\n" << name << " continues to think." << endl;
-						wait = rand() % 5 + 3; sleep(wait);
+						wait = rand() % 5 + 3; /* sleep(wait); */
 						cout << (position + 1) << endl;
 					} 
 					
@@ -562,7 +562,7 @@ class Player {
 					
 					if (isAI) { 
 						cout << "\n" << name << " continues to think." << endl;
-						wait = rand() % 5 + 3; sleep(wait);
+						wait = rand() % 5 + 3; /* sleep(wait); */
 						cout << (position + 1) << endl;
 					} 
 					
@@ -578,7 +578,7 @@ class Player {
 
 					if (isAI) { 
 						cout << "\n" << name << " continues to think." << endl;
-						wait = rand() % 5 + 3; sleep(wait);
+						wait = rand() % 5 + 3; /* sleep(wait); */
 						cout << playerPosition << endl;
 					} 
 					else { cin >> playerPosition; }
@@ -587,7 +587,7 @@ class Player {
 
 					if (isAI) { 
 						cout << "\n" << name << " keeps thinking." << endl;
-						wait = rand() % 3 + 1; sleep(wait);
+						wait = rand() % 3 + 1; /* sleep(wait); */
 						cout << (position + 1) << endl;
 					} 
 					else { cin >> position; position--; }
@@ -601,7 +601,7 @@ class Player {
 
 					if (isAI) { 
 						cout << "\n" << name << " keeps thinking." << endl;
-						wait = rand() % 3 + 1; sleep(wait);
+						wait = rand() % 3 + 1; /* sleep(wait); */
 						cout << playerPosition << endl;
 					} 
 					else { cin >> playerPosition; }
@@ -610,7 +610,7 @@ class Player {
 					
 					if (isAI) { 
 						cout << "\n" << name << " continues to think." << endl;
-						wait = rand() % 5 + 3; sleep(wait);
+						wait = rand() % 5 + 3; /* sleep(wait); */
 						cout << (position + 1) << endl;
 					} 
 					else { cin >> position; position--; }
@@ -625,7 +625,7 @@ class Player {
 
 					if (isAI) { 
 						cout << "\n" << name << " continues to think." << endl;
-						wait = rand() % 5 + 3; sleep(wait);
+						wait = rand() % 5 + 3; /* sleep(wait); */
 						cout << player1 << endl;
 					} 
 					else { cin >> player1; }
@@ -634,7 +634,7 @@ class Player {
 
 					if (isAI) { 
 						cout << "\n" << name << " keeps thinking." << endl;
-						wait = rand() % 3 + 1; sleep(wait);
+						wait = rand() % 3 + 1; /* sleep(wait); */
 						cout << card1 << endl;
 					} 
 					else { cin >> card1; card1--; }
@@ -643,7 +643,7 @@ class Player {
 					
 					if (isAI) { 
 						cout << "\n" << name << "'s still thinking." << endl;
-						wait = rand() % 5 + 3; sleep(wait);
+						wait = rand() % 5 + 3; /* sleep(wait); */
 						cout << player2 << endl;
 					} 
 					else { cin >> player2; }
@@ -652,7 +652,7 @@ class Player {
 					
 					if (isAI) { 
 						cout << "\n" << name << " apparently never stops thinking." << endl;
-						wait = rand() % 3 + 1; sleep(wait);
+						wait = rand() % 3 + 1; /* sleep(wait); */
 						cout << card2 << endl;
 					} 
 					else { cin >> card2; card2--; }
@@ -669,7 +669,7 @@ class Player {
 			cout << "\nChoose which one of your cards you want to eliminate. (Type the position of the card as a digit.)" << endl;
 			
 			if (isAI) {
-				cout << "\n" << name << " is thinking. (again.)" << endl; wait = rand() % 5 + 3; sleep(wait); 
+				cout << "\n" << name << " is thinking. (again.)" << endl; wait = rand() % 5 + 3; /* sleep(wait); */ 
 				position = rand() % Hand.size(); cout << (position + 1) << endl;
 			}
 			
@@ -695,7 +695,7 @@ class Player {
 			cout << "\nChoose which one of your cards you want to swap out. (Type the position of the card as a digit.)" << endl;
 
 			if (isAI) {
-				cout << "\n" << name << " is thinking. (again.)" << endl; wait = rand() % 5 + 3; sleep(wait);
+				cout << "\n" << name << " is thinking. (again.)" << endl; wait = rand() % 5 + 3; /* sleep(wait); */
 				position = rand() % Hand.size(); cout << (position + 1) << endl;
 			} 
 			
@@ -714,7 +714,7 @@ class Player {
 			cout << "\nYou drew " << Deck.back().name << " (" << Deck.back().point << "). Do you put the card in your hand, or onto the stack? (Type \"H\" or \"S\".) " << endl;
 			
 			if (isAI) {
-				cout << "\n" << name << " is thinking. (again.)" << endl; wait = rand() % 5 + 3; sleep(wait); 
+				cout << "\n" << name << " is thinking. (again.)" << endl; wait = rand() % 5 + 3; /* sleep(wait); */ 
 				drawAnswer = rand() % 2; if (drawAnswer) { answer = "H"; } else { answer = "S"; }
 				cout << answer << endl;
 			} 
@@ -725,7 +725,7 @@ class Player {
 				cout << "\nChoose which one of your cards to swap it out with. (Type the position of the card as a digit.)" << endl;
 
 				if (isAI) {
-					cout << "\n" << name << " is thinking. For the third time." << endl; wait = rand() % 5 + 3; sleep(wait); 
+					cout << "\n" << name << " is thinking. For the third time." << endl; wait = rand() % 5 + 3; /* sleep(wait); */ 
 					position = rand() % Hand.size();
 				}
 				
@@ -752,7 +752,7 @@ class Player {
 		void AI(bool& knock, int& wait, int& playerTurn) { // Send help
 			// Easy
 			cout << "\n" << name << " is thinking." << endl;
-			wait = rand() % 8 + 3; sleep(wait);
+			wait = rand() % 8 + 3; /* sleep(wait); */
 
 			if (!knock) { ToF = rand() % 4 + 1; } else { ToF = rand() % 3 + 1; }
 
@@ -870,102 +870,8 @@ void printPoints(vector<Card>& Hand, int& totalPoints) {
 	}
 }
 
-void tiebreaker(vector<Player>& Players, vector<Card>& Deck) {
-	int count, start = 0; bool tie = false;
-	
-	for (int i = 0; i < Players.size() - 1; i++) {
-		if (Players.at(i).totalPoints == Players.at(i + 1).totalPoints) {
-			if (count == 0) { start = i + 1; } count++;
-		}
-	}
-
-	if (count != 0) { tie = true; }
-
-	switch (count) {
-		case 1:
-			cout << "\nIt appears that Players " << start << " and " << start + 1 << " are tied for points!" << endl;
-			cout << "In order to mitigate that, the two tied players will draw another card, then total their points again." << endl;
-			
-			Players.at(start).Hand.push_back(Deck.back()); Players.at(start + 1).Hand.push_back(Deck.back());
-
-			for (int i = 0; i < Players.at(start).Hand.size(); i++) {
-				Players.at(start).totalPoints += Players.at(start).Hand.at(i).point;
-			}
-			for (int i = 0; i < Players.at(start + 1).Hand.size(); i++) {
-				Players.at(start + 1).totalPoints += Players.at(start + 1).Hand.at(i).point;
-			}
-
-			break;
-	
-		case 2:
-			cout << "\nIt appears that Players " << start << ", " << start + 1 << ", and " << start + 2 << " are tied for points!" << endl;
-			cout << "In order to mitigate that, the three tied players will draw another card, then total their points again." << endl;
-			
-			Players.at(start).Hand.push_back(Deck.back()); 
-			Players.at(start + 1).Hand.push_back(Deck.back());
-			Players.at(start + 2).Hand.push_back(Deck.back());
-
-			for (int i = 0; i < Players.at(start).Hand.size(); i++) {
-				Players.at(start).totalPoints += Players.at(start).Hand.at(i).point;
-			}
-			for (int i = 0; i < Players.at(start + 1).Hand.size(); i++) {
-				Players.at(start + 1).totalPoints += Players.at(start + 1).Hand.at(i).point;
-			}
-			for (int i = 0; i < Players.at(start + 2).Hand.size(); i++) {
-				Players.at(start + 2).totalPoints += Players.at(start + 2).Hand.at(i).point;
-			}
-
-			break;
-	
-		case 3:
-			cout << "\nIt appears that all the players tied for points!" << endl;
-			cout << "In order to mitigate that, they will all draw another card, then total their points again." << endl;
-			
-			Players.at(start).Hand.push_back(Deck.back()); 
-			Players.at(start + 1).Hand.push_back(Deck.back());
-			Players.at(start + 2).Hand.push_back(Deck.back());
-			Players.at(start + 3).Hand.push_back(Deck.back());
-
-			for (int i = 0; i < Players.at(start).Hand.size(); i++) {
-				Players.at(start).totalPoints += Players.at(start).Hand.at(i).point;
-			}
-			for (int i = 0; i < Players.at(start + 1).Hand.size(); i++) {
-				Players.at(start + 1).totalPoints += Players.at(start + 1).Hand.at(i).point;
-			}
-			for (int i = 0; i < Players.at(start + 2).Hand.size(); i++) {
-				Players.at(start + 2).totalPoints += Players.at(start + 2).Hand.at(i).point;
-			}
-			for (int i = 0; i < Players.at(start + 3).Hand.size(); i++) {
-				Players.at(start + 3).totalPoints += Players.at(start + 3).Hand.at(i).point;
-			}
-
-			break;
-	
-		default:
-			break;
-	}
-
-	if (count != 0) { tiebreaker(Players, Deck); }
-
-	if (!tie) {
-		cout << "\nNow that the tie has been broken, let's add up the totals." << endl;
-		cout << "\nPlayer 1 has "; printPoints(Players.at(0).Hand, Players.at(0).totalPoints);
-		cout << "\nPlayer 2 has "; printPoints(Players.at(1).Hand, Players.at(1).totalPoints);
-		cout << "\nPlayer 3 has "; printPoints(Players.at(2).Hand, Players.at(2).totalPoints);
-		cout << "\nPlayer 4 has "; printPoints(Players.at(3).Hand, Players.at(3).totalPoints);
-	}
-}
-
-void winner(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& Deck) {
-	Player lowest; vector<Player> Players{P1, P2, P3, P4};
-
-	cout << "\nNow that the game is over, let's add up the totals." << endl;
-	cout << "\nPlayer 1 has "; printPoints(P1.Hand, P1.totalPoints);
-	cout << "\nPlayer 2 has "; printPoints(P2.Hand, P2.totalPoints);
-	cout << "\nPlayer 3 has "; printPoints(P3.Hand, P3.totalPoints);
-	cout << "\nPlayer 4 has "; printPoints(P4.Hand, P4.totalPoints);
-
-	tiebreaker(Players, Deck); 
+void tiebreaker(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& Deck, int& tieToggle) {
+	int count = 0; int start = 0; bool tie = false; vector<Player> Players{P1, P2, P3, P4}; Player lowest;
 
 	for (int i = 1; i < Players.size(); i++) {
 		lowest = Players.at(i); int j = i - 1;
@@ -975,24 +881,244 @@ void winner(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& Deck) 
 		Players.at(j + 1) = lowest;
 	}
 	
-	cout << "\nIn first place, we have " << Players.at(0).name << " with " << Players.at(0).totalPoints; 
-	if (Players.at(0).totalPoints == 1) { cout << " point." << endl; }
-	else { cout << " points." << endl; }
-	
-	cout << "\nIn second place, we have " << Players.at(1).name << " with " << Players.at(1).totalPoints; 
-	if (Players.at(1).totalPoints == 1) { cout << " point." << endl; }
-	else { cout << " points." << endl; }
-	
-	cout << "\nIn third place, we have " << Players.at(2).name << " with " << Players.at(2).totalPoints; 
-	if (Players.at(2).totalPoints == 1) { cout << " point." << endl; }
-	else { cout << " points." << endl; }
-	
-	cout << "\nAnd in fourth place, we have " << Players.at(3).name << " with " << Players.at(3).totalPoints; 
-	if (Players.at(3).totalPoints == 1) { cout << " point." << endl; }
-	else { cout << " points." << endl; }
+	for (int i = 0; i < Players.size() - 1; i++) {
+		for (int j = i + 1; j < Players.size(); j++) {
+			if (Players.at(i).totalPoints == Players.at(j).totalPoints) {
+				if (count == 0) { start = i; } count++;
+			}
+		}
+	}
 
-	cout << "\nTherefore, our winner is " << Players.at(0).name << "!" << endl;
-	cout << "\nThank you for playing, I hope you had fun!" << endl;
+	if (count != 0) { tie = true; tieToggle++; }
+
+	switch (count) {
+		case 1:
+			cout << "\nIt appears that " << Players.at(start).name << " and " << Players.at(start + 1).name << " are tied for points!" << endl;
+			cout << "\nIn order to mitigate that, the two tied players will draw another card, then total their points again." << endl;
+
+			if (Players.at(start).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back();
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+			
+			if (Players.at(start + 1).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+
+			break;
+	
+		case 2:
+			cout << "\nIt appears that Players " << start << ", " << start + 1 << ", and " << start + 2 << " are tied for points!" << endl;
+			cout << "\nIn order to mitigate that, the three tied players will draw another card, then total their points again." << endl;
+			
+			if (Players.at(start).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+			
+			if (Players.at(start + 1).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+	
+			if (Players.at(start + 2).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start + 2).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start + 2).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start + 2).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+
+			break;
+	
+		case 3:
+			cout << "\nIt appears that all the players tied for points!" << endl;
+			cout << "\nIn order to mitigate that, they will all draw another card, then total their points again." << endl;
+			
+			if (Players.at(start).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+	
+			if (Players.at(start + 1).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+
+			if (Players.at(start + 2).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start + 2).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start + 2).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start + 2).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+			
+			if (Players.at(start + 3).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start + 3).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start + 3).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start + 3).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+
+			break;
+	
+		default:
+			break;
+	}
+
+	if (tie) { 
+		tiebreaker(P1, P2, P3, P4, Deck, tieToggle); 
+	}
+
+	else {
+		if (tieToggle != 0) {
+			cout << "\nNow that the tie has been broken, let's add up the totals again." << endl;
+			cout << "\nPlayer 1 has "; printPoints(P1.Hand, P1.totalPoints);
+			cout << "\nPlayer 2 has "; printPoints(P2.Hand, P2.totalPoints);
+			cout << "\nPlayer 3 has "; printPoints(P3.Hand, P3.totalPoints);
+			cout << "\nPlayer 4 has "; printPoints(P4.Hand, P4.totalPoints);
+		}
+
+		for (int i = 1; i < Players.size(); i++) {
+			lowest = Players.at(i); int j = i - 1;
+			while (j >= 0 && Players.at(j).totalPoints > lowest.totalPoints) {
+				Players.at(j + 1) = Players.at(j); j--;
+			}
+			Players.at(j + 1) = lowest;
+		}
+		
+		cout << "\nIn first place, we have " << Players.at(0).name << " with " << Players.at(0).totalPoints; 
+		if (Players.at(0).totalPoints == 1) { cout << " point." << endl; }
+		else { cout << " points." << endl; }
+		
+		cout << "\nIn second place, we have " << Players.at(1).name << " with " << Players.at(1).totalPoints; 
+		if (Players.at(1).totalPoints == 1) { cout << " point." << endl; }
+		else { cout << " points." << endl; }
+		
+		cout << "\nIn third place, we have " << Players.at(2).name << " with " << Players.at(2).totalPoints; 
+		if (Players.at(2).totalPoints == 1) { cout << " point." << endl; }
+		else { cout << " points." << endl; }
+		
+		cout << "\nAnd in fourth place, we have " << Players.at(3).name << " with " << Players.at(3).totalPoints; 
+		if (Players.at(3).totalPoints == 1) { cout << " point." << endl; }
+		else { cout << " points." << endl; }
+
+		cout << "\nTherefore, our winner is " << Players.at(0).name << "!" << endl;
+		cout << "\nThank you for playing, I hope you had fun!" << endl;
+	}
+}
+
+void winner(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& Deck, int& tieToggle) {
+	Player lowest; vector<Player> Players{P1, P2, P3, P4};
+
+	cout << "\nNow that the game is over, let's add up the totals." << endl;
+	cout << "\nPlayer 1 has "; printPoints(P1.Hand, P1.totalPoints);
+	cout << "\nPlayer 2 has "; printPoints(P2.Hand, P2.totalPoints);
+	cout << "\nPlayer 3 has "; printPoints(P3.Hand, P3.totalPoints);
+	cout << "\nPlayer 4 has "; printPoints(P4.Hand, P4.totalPoints);
+
+	tiebreaker(P1, P2, P3, P4, Deck, tieToggle);
 }
 
 void finalRound(int& playerTurn, int& wait, bool& knock, vector<Card>& Deck, vector<Card>& Stack, Player& P1, Player& P2, Player& P3, Player& P4) {
@@ -1043,7 +1169,7 @@ int main() {
 
 	vector<Player> Players{P1, P2, P3, P4}; vector<Card> Stack; srand(time(NULL));
 
-	bool knock = false; int playerTurn = 0; int wait = 0; string SorM = "";
+	bool knock = false; int tieToggle = 0; int playerTurn = 0; int wait = 0; string SorM = "";
 
 	for (int i = 0; i < Deck.size(); i++) {
 		Deck.at(i).knownToP1 = false;
@@ -1062,7 +1188,7 @@ int main() {
 
 	if (SorM == "S") { P2.isAI = true; P3.isAI = true; P4.isAI = true; }
 
-	// Delete below when done testing
+	// Comment below when done testing
 	if (SorM == "A") { P1.isAI = true; P2.isAI = true; P3.isAI = true; P4.isAI = true; }
 
 	// Uncomment the below part when done testing
@@ -1139,7 +1265,7 @@ int main() {
 
 	finalRound(playerTurn, wait, knock, Deck, Stack, P1, P2, P3, P4);
 
-	winner(P1, P2, P3, P4, Deck);
+	winner(P1, P2, P3, P4, Deck, tieToggle);
 	
 	return 0;
 }
