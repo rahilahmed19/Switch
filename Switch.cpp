@@ -868,7 +868,89 @@ void printPoints(vector<Card>& Hand, int& totalPoints) {
 	}
 }
 
-void winner(Player& P1, Player& P2, Player& P3, Player& P4) {
+void tiebreaker(vector<Player>& Players, vector<Card>& Deck) {
+	int count, start = 0;
+	
+	for (int i = 0; i < Players.size() - 1; i++) {
+		if (Players.at(i).totalPoints == Players.at(i + 1).totalPoints) {
+			if (count == 0) { start = i + 1; } count++;
+		}
+	}
+
+	switch (count) {
+		case 1:
+			cout << "\nIt appears that Players " << start << " and " << start + 1 << " are tied for points!" << endl;
+			cout << "In order to mitigate that, the two tied players will draw another card, then total their points again." << endl;
+			
+			Players.at(start).Hand.push_back(Deck.back()); Players.at(start + 1).Hand.push_back(Deck.back());
+
+			for (int i = 0; i < Players.at(start).Hand.size(); i++) {
+				Players.at(start).totalPoints += Players.at(start).Hand.at(i).point;
+			}
+			for (int i = 0; i < Players.at(start + 1).Hand.size(); i++) {
+				Players.at(start + 1).totalPoints += Players.at(start + 1).Hand.at(i).point;
+			}
+
+			break;
+	
+		case 2:
+			cout << "\nIt appears that Players " << start << ", " << start + 1 << ", and " << start + 2 << " are tied for points!" << endl;
+			cout << "In order to mitigate that, the three tied players will draw another card, then total their points again." << endl;
+			
+			Players.at(start).Hand.push_back(Deck.back()); 
+			Players.at(start + 1).Hand.push_back(Deck.back());
+			Players.at(start + 2).Hand.push_back(Deck.back());
+
+			for (int i = 0; i < Players.at(start).Hand.size(); i++) {
+				Players.at(start).totalPoints += Players.at(start).Hand.at(i).point;
+			}
+			for (int i = 0; i < Players.at(start + 1).Hand.size(); i++) {
+				Players.at(start + 1).totalPoints += Players.at(start + 1).Hand.at(i).point;
+			}
+			for (int i = 0; i < Players.at(start + 2).Hand.size(); i++) {
+				Players.at(start + 2).totalPoints += Players.at(start + 2).Hand.at(i).point;
+			}
+
+			break;
+	
+		case 3:
+			cout << "\nIt appears that all the players tied for points!" << endl;
+			cout << "In order to mitigate that, they will all draw another card, then total their points again." << endl;
+			
+			Players.at(start).Hand.push_back(Deck.back()); 
+			Players.at(start + 1).Hand.push_back(Deck.back());
+			Players.at(start + 2).Hand.push_back(Deck.back());
+			Players.at(start + 3).Hand.push_back(Deck.back());
+
+			for (int i = 0; i < Players.at(start).Hand.size(); i++) {
+				Players.at(start).totalPoints += Players.at(start).Hand.at(i).point;
+			}
+			for (int i = 0; i < Players.at(start + 1).Hand.size(); i++) {
+				Players.at(start + 1).totalPoints += Players.at(start + 1).Hand.at(i).point;
+			}
+			for (int i = 0; i < Players.at(start + 2).Hand.size(); i++) {
+				Players.at(start + 2).totalPoints += Players.at(start + 2).Hand.at(i).point;
+			}
+			for (int i = 0; i < Players.at(start + 3).Hand.size(); i++) {
+				Players.at(start + 3).totalPoints += Players.at(start + 3).Hand.at(i).point;
+			}
+
+			break;
+	
+		default:
+			break;
+	}
+
+	if (count != 0) { tiebreaker(Players, Deck); }
+
+	cout << "\nNow that the has been broken, let's add up the totals." << endl;
+	cout << "\nPlayer 1 has "; printPoints(Players.at(0).Hand, Players.at(0).totalPoints);
+	cout << "\nPlayer 2 has "; printPoints(Players.at(1).Hand, Players.at(1).totalPoints);
+	cout << "\nPlayer 3 has "; printPoints(Players.at(2).Hand, Players.at(2).totalPoints);
+	cout << "\nPlayer 4 has "; printPoints(Players.at(3).Hand, Players.at(3).totalPoints);
+}
+
+void winner(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& Deck) {
 	Player lowest; vector<Player> Players{P1, P2, P3, P4};
 
 	cout << "\nNow that the game is over, let's add up the totals." << endl;
@@ -876,6 +958,8 @@ void winner(Player& P1, Player& P2, Player& P3, Player& P4) {
 	cout << "\nPlayer 2 has "; printPoints(P2.Hand, P2.totalPoints);
 	cout << "\nPlayer 3 has "; printPoints(P3.Hand, P3.totalPoints);
 	cout << "\nPlayer 4 has "; printPoints(P4.Hand, P4.totalPoints);
+
+	tiebreaker(Players, Deck); 
 
 	for (int i = 1; i < Players.size(); i++) {
 		lowest = Players.at(i); int j = i - 1;
@@ -945,8 +1029,6 @@ int main() {
 	TwoDi.point = 2; ThreeDi.point = 3; FourDi.point = 4; FiveDi.point = 5; SixDi.point = 6; SevenDi.point = 7; EightDi.point = 8; NineDi.point = 9; TenDi.point = 10; JackDi.point = 10; QueenDi.point = 10; KingDi.point = 0; AceDi.point = 1; TwoCl.point = 2; ThreeCl.point = 3; FourCl.point = 4; FiveCl.point = 5; SixCl.point = 6; SevenCl.point = 7; EightCl.point = 8; NineCl.point = 9; TenCl.point = 10; JackCl.point = 10; QueenCl.point = 10; KingCl.point = 10; AceCl.point = 1; TwoHe.point = 2; ThreeHe.point = 3; FourHe.point = 4; FiveHe.point = 5; SixHe.point = 6; SevenHe.point = 7; EightHe.point = 8; NineHe.point = 9; TenHe.point = 10; JackHe.point = 10; QueenHe.point = 10; KingHe.point = 0; AceHe.point = 1; TwoSp.point = 2; ThreeSp.point = 3; FourSp.point = 4; FiveSp.point = 5; SixSp.point = 6; SevenSp.point = 7; EightSp.point = 8; NineSp.point = 9; TenSp.point = 10; JackSp.point = 10; QueenSp.point = 10; KingSp.point = 10; AceSp.point = 1;
 	
 	TwoDi.power = 2; ThreeDi.power = 3; FourDi.power = 4; FiveDi.power = 5; SixDi.power = 6; SevenDi.power = 7; EightDi.power = 8; NineDi.power = 9; TenDi.power = 10; JackDi.power = 11; QueenDi.power = 12; KingDi.power = 13; AceDi.power = 1; TwoCl.power = 2; ThreeCl.power = 3; FourCl.power = 4; FiveCl.power = 5; SixCl.power = 6; SevenCl.power = 7; EightCl.power = 8; NineCl.power = 9; TenCl.power = 10; JackCl.power = 11; QueenCl.power = 12; KingCl.power = 13; AceCl.power = 1; TwoHe.power = 2; ThreeHe.power = 3; FourHe.power = 4; FiveHe.power = 5; SixHe.power = 6; SevenHe.power = 7; EightHe.power = 8; NineHe.power = 9; TenHe.power = 10; JackHe.power = 11; QueenHe.power = 12; KingHe.power = 13; AceHe.power = 1; TwoSp.power = 2; ThreeSp.power = 3; FourSp.power = 4; FiveSp.power = 5; SixSp.power = 6; SevenSp.power = 7; EightSp.power = 8; NineSp.power = 9; TenSp.power = 10; JackSp.power = 11; QueenSp.power = 12; KingSp.power = 13; AceSp.power = 1;
-	
-	// TwoDi.knownToYou = true; ThreeDi.knownToYou = true; FourDi.knownToYou = true; FiveDi.knownToYou = true; SixDi.knownToYou = true; SevenDi.knownToYou = true; EightDi.knownToYou = true; NineDi.knownToYou = true; TenDi.knownToYou = true; JackDi.knownToYou = true; QueenDi.knownToYou = true; KingDi.knownToYou = true; AceDi.knownToYou = true; TwoCl.knownToYou = true; ThreeCl.knownToYou = true; FourCl.knownToYou = true; FiveCl.knownToYou = true; SixCl.knownToYou = true; SevenCl.knownToYou = true; EightCl.knownToYou = true; NineCl.knownToYou = true; TenCl.knownToYou = true; JackCl.knownToYou = true; QueenCl.knownToYou = true; KingCl.knownToYou = true; AceCl.knownToYou = true; TwoHe.knownToYou = true; ThreeHe.knownToYou = true; FourHe.knownToYou = true; FiveHe.knownToYou = true; SixHe.knownToYou = true; SevenHe.knownToYou = true; EightHe.knownToYou = true; NineHe.knownToYou = true; TenHe.knownToYou = true; JackHe.knownToYou = true; QueenHe.knownToYou = true; KingHe.knownToYou = true; AceHe.knownToYou = true; TwoSp.knownToYou = true; ThreeSp.knownToYou = true; FourSp.knownToYou = true; FiveSp.knownToYou = true; SixSp.knownToYou = true; SevenSp.knownToYou = true; EightSp.knownToYou = true; NineSp.knownToYou = true; TenSp.knownToYou = true; JackSp.knownToYou = true; QueenSp.knownToYou = true; KingSp.knownToYou = true; AceSp.knownToYou = true;
 
 	Player P1; Player P2; Player P3; Player P4;
 	P1.name = "Player 1"; P2.name = "Player 2"; P3.name = "Player 3"; P4.name = "Player 4";
@@ -966,8 +1048,6 @@ int main() {
 
 	shuffleDeck(Deck); distributeHand(P1, P2, P3, P4, Deck);
 
-	// Player lmao; lmao.Hand.assign(Deck.begin(), Deck.end()); lmao.printHand();
-
 	cout << "\nHello, and welcome to Switch!" << endl;
 
 	cout << "\nYou can either play single player, against AI players, or hotseat multiplayer, where everyone takes turns on this computer. (Type \"S\" or \"M\".)" << endl;
@@ -976,13 +1056,17 @@ int main() {
 
 	if (SorM == "S") { P2.isAI = true; P3.isAI = true; P4.isAI = true; }
 
-	cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
+	// Delete below when done testing
+	if (SorM == "A") { P1.isAI = true; P2.isAI = true; P3.isAI = true; P4.isAI = true; }
 
-	int position1, position2; cin >> position1 >> position2; position1--; position2--;
+	// Uncomment the below part when done testing
+	// cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
 
-	P1.Hand.at(position1).knownToP1 = true; P1.Hand.at(position2).knownToP1 = true;
+	int position1, position2; /* cin >> position1 >> position2; position1--; position2--; */
 
-	cout << "\nHere are your (known) cards:" << endl; P1.printHand(P1.name);
+	// P1.Hand.at(position1).knownToP1 = true; P1.Hand.at(position2).knownToP1 = true;
+
+	// cout << "\nHere are your (known) cards:" << endl; P1.printHand(P1.name);
 
 	while (!knock) {
 		switch (playerTurn % 4) {
@@ -1042,13 +1126,14 @@ int main() {
 			
 			default:
 				break;
+				
 		}
 		playerTurn++;
 	}
 
 	finalRound(playerTurn, wait, knock, Deck, Stack, P1, P2, P3, P4);
 
-	winner(P1, P2, P3, P4);
+	winner(P1, P2, P3, P4, Deck);
 	
 	return 0;
 }
