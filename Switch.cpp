@@ -749,12 +749,14 @@ class Player {
 			cout << "\nStack:" << endl; printStack(Stack, name);
 		}
 
-		void AI(bool& knock, int& wait) { // Send help
+		void AI(bool& knock, int& wait, int& playerTurn) { // Send help
 			// Easy
 			cout << "\n" << name << " is thinking." << endl;
 			wait = rand() % 8 + 3; sleep(wait);
 
 			if (!knock) { ToF = rand() % 4 + 1; } else { ToF = rand() % 3 + 1; }
+
+			if (name == "Player 1" && playerTurn == 0) { ToF = 3; } // P1 can only draw a card when starting the game
 
 			switch (ToF) {
 				case 1:
@@ -774,12 +776,12 @@ class Player {
 					break;
 				
 				default:
-					AI(knock, wait);
+					AI(knock, wait, playerTurn);
 					break;
 			}
 		}
 
-		void turn(int& wait, bool& knock, vector<Card>& Deck, vector<Card>& Stack, Player& P1, Player& P2, Player& P3, Player& P4) {
+		void turn(int& wait, int& playerTurn, bool& knock, vector<Card>& Deck, vector<Card>& Stack, Player& P1, Player& P2, Player& P3, Player& P4) {
 			if (!knock) {
 				cout << "\nWould you like to knock, eliminate a card from your hand, swap a card from your hand for the topmost card on the stack, or draw a card?" << endl;
 			}
@@ -797,7 +799,7 @@ class Player {
 				cout << "(Type \"E\", \"S\", or \"D\", case sensitive.)" << endl;
 			}
 			
-			if (isAI) { AI(knock, wait); } 
+			if (isAI) { AI(knock, wait, playerTurn); } 
 			
 			else { cin >> answer; }
 
@@ -809,7 +811,7 @@ class Player {
 			
 			else {
 				knock = true; cout << "\n" << name << " has knocked. This is the final round." << endl;
-				turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				turn(wait, playerTurn, knock, Deck, Stack, P1, P2, P3, P4);
 			}
 			
 			totalPoints = 0;
@@ -998,22 +1000,22 @@ void finalRound(int& playerTurn, int& wait, bool& knock, vector<Card>& Deck, vec
 		switch (playerTurn % 4) {
 			case 0:
 				cout << "\nPlayer 1's final turn:" << endl;
-				P1.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P1.turn(wait, playerTurn, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 1:
 				cout << "\nPlayer 2's final turn:" << endl;
-				P2.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P2.turn(wait, playerTurn, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 2:
 				cout << "\nPlayer 3's final turn:" << endl;
-				P3.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P3.turn(wait, playerTurn, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 3:
 				cout << "\nPlayer 4's final turn:" << endl;
-				P4.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P4.turn(wait, playerTurn, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			default:
@@ -1077,7 +1079,7 @@ int main() {
 			case 0:
 				cout << "\nPlayer 1's turn:" << endl;
 				
-				P1.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P1.turn(wait, playerTurn, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 1:
@@ -1093,7 +1095,7 @@ int main() {
 					cout << "\nHere are your (known) cards:" << endl; P2.printHand(P2.name);
 				}
 
-				P2.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P2.turn(wait, playerTurn, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 2:
@@ -1109,7 +1111,7 @@ int main() {
 					cout << "\nHere are your (known) cards:" << endl; P3.printHand(P3.name);
 				}
 
-				P3.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P3.turn(wait, playerTurn, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 3:
@@ -1125,7 +1127,7 @@ int main() {
 					cout << "\nHere are your (known) cards:" << endl; P4.printHand(P4.name);
 				}
 
-				P4.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P4.turn(wait, playerTurn, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			default:
