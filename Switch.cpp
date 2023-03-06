@@ -896,37 +896,55 @@ void tiebreaker(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& De
 			cout << "\nIt appears that " << Players.at(start).name << " and " << Players.at(start + 1).name << " are tied for points!" << endl;
 			cout << "\nIn order to mitigate that, the two tied players will draw another card, then total their points again." << endl;
 
-			if (Players.at(start).name == "Player 1") { 
-				P1.Hand.push_back(Deck.back()); Deck.pop_back();
+			Deck.back().knownToP1 = true; Deck.back().knownToP2 = true;
+			Deck.back().knownToP3 = true; Deck.back().knownToP4 = true;
+
+			cout << "\n" << Players.at(start).name << " drew:" << endl;
+
+			if (Players.at(start).name == "Player 1") {
+				P1.Hand.push_back(Deck.back());
+				printCard(Deck.back(), P1.name); Deck.pop_back();
 				P1.totalPoints += P1.Hand.back().point;
 			}
 			if (Players.at(start).name == "Player 2") { 
-				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.Hand.push_back(Deck.back());
+				printCard(Deck.back(), P2.name); Deck.pop_back(); 
 				P2.totalPoints += P2.Hand.back().point;
 			}
 			if (Players.at(start).name == "Player 3") { 
-				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.Hand.push_back(Deck.back());
+				printCard(Deck.back(), P3.name); Deck.pop_back(); 
 				P3.totalPoints += P3.Hand.back().point;
 			}
 			if (Players.at(start).name == "Player 4") { 
-				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.Hand.push_back(Deck.back());
+				printCard(Deck.back(), P4.name); Deck.pop_back(); 
 				P4.totalPoints += P4.Hand.back().point;
 			}
+
+			Deck.back().knownToP1 = true; Deck.back().knownToP2 = true;
+			Deck.back().knownToP3 = true; Deck.back().knownToP4 = true;
+
+			cout << "\n" << Players.at(start + 1).name << " drew:" << endl;
 			
 			if (Players.at(start + 1).name == "Player 1") { 
-				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.Hand.push_back(Deck.back()); 
+				printCard(Deck.back(), P1.name); Deck.pop_back();
 				P1.totalPoints += P1.Hand.back().point;
 			}
 			if (Players.at(start + 1).name == "Player 2") { 
-				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.Hand.push_back(Deck.back()); 
+				printCard(Deck.back(), P2.name); Deck.pop_back(); 
 				P2.totalPoints += P2.Hand.back().point;
 			}
 			if (Players.at(start + 1).name == "Player 3") { 
-				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.Hand.push_back(Deck.back()); 
+				printCard(Deck.back(), P3.name); Deck.pop_back(); 
 				P3.totalPoints += P3.Hand.back().point;
 			}
 			if (Players.at(start + 1).name == "Player 4") { 
-				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.Hand.push_back(Deck.back()); 
+				printCard(Deck.back(), P4.name); Deck.pop_back(); 
 				P4.totalPoints += P4.Hand.back().point;
 			}
 
