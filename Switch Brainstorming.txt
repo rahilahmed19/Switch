@@ -3,9 +3,7 @@ Switch Brainstorming
 // If you want to print out cards each turn or something
 // ♦︎♣︎♥︎♠︎♢♧♡♤
 
-Immediate concern #1: Make the AI look at two of their cards at the start of their first turn
-
-Immediate concern #2: Rework stuff so that P1 only draws on the first turn, and that you can't knock until turn "4" (aka not until everyone has gone at least once)
+Immediate concern #1: Make is so that the AI can't knock until after turn "4" (aka not until everyone has gone at least once)
 
 Immediate concern #3: Edit drawCard so that when choosing stack, the AI determines the hand within the powerCard function, and not before it's called. It creates an error otherwise if the hand size of the player who used the powerCard doesn't match the size of the hand of the player who they're using it on
 
