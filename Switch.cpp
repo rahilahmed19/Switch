@@ -528,6 +528,10 @@ class Player {
 
 		void powerCard(int& power, int& wait, bool& knock, Player& P1, Player& P2, Player& P3, Player& P4) {
 			Card Temp; string viewer = this->name;
+			
+			position = rand() % Hand.size(); playerPosition = rand() % 4 + 1;
+			player1 = rand() % 4 + 1; player2 = rand() % 4 + 1;
+				
 			switch (power) {
 				case 7:
 					cout << "\nYou can look at one of your own cards. Which one would you like to check? (Type the position of the card as a digit.)" << endl;
@@ -575,6 +579,12 @@ class Player {
 
 					if (isAI) { 
 						cout << "\n" << name << " keeps thinking." << endl;
+
+						if (playerPosition == 1) { position = rand() % P1.Hand.size(); }
+						if (playerPosition == 2) { position = rand() % P2.Hand.size(); }
+						if (playerPosition == 3) { position = rand() % P3.Hand.size(); }
+						if (playerPosition == 4) { position = rand() % P4.Hand.size(); }
+						
 						wait = rand() % 3 + 1; /* sleep(wait); */
 						cout << (position + 1) << endl;
 					} 
@@ -597,8 +607,14 @@ class Player {
 					cout << "\nWhich one of their cards would you like to see? (Type the position of the card as a digit.)" << endl;
 					
 					if (isAI) { 
-						cout << "\n" << name << " continues to think." << endl;
-						wait = rand() % 5 + 3; /* sleep(wait); */
+						cout << "\n" << name << " keeps thinking." << endl;
+
+						if (playerPosition == 1) { position = rand() % P1.Hand.size(); }
+						if (playerPosition == 2) { position = rand() % P2.Hand.size(); }
+						if (playerPosition == 3) { position = rand() % P3.Hand.size(); }
+						if (playerPosition == 4) { position = rand() % P4.Hand.size(); }
+						
+						wait = rand() % 3 + 1; /* sleep(wait); */
 						cout << (position + 1) << endl;
 					} 
 					else { cin >> position; position--; }
@@ -622,6 +638,12 @@ class Player {
 
 					if (isAI) { 
 						cout << "\n" << name << " keeps thinking." << endl;
+
+						if (player1 == 1) { card1 = rand() % P1.Hand.size(); }
+						if (player1 == 2) { card1 = rand() % P2.Hand.size(); }
+						if (player1 == 3) { card1 = rand() % P3.Hand.size(); }
+						if (player1 == 4) { card1 = rand() % P4.Hand.size(); }
+						
 						wait = rand() % 3 + 1; /* sleep(wait); */
 						cout << card1 + 1 << endl;
 					} 
@@ -640,6 +662,12 @@ class Player {
 					
 					if (isAI) { 
 						cout << "\n" << name << " apparently never stops thinking." << endl;
+
+						if (player2 == 1) { card2 = rand() % P1.Hand.size(); }
+						if (player2 == 2) { card2 = rand() % P2.Hand.size(); }
+						if (player2 == 3) { card2 = rand() % P3.Hand.size(); }
+						if (player2 == 4) { card2 = rand() % P4.Hand.size(); }
+						
 						wait = rand() % 3 + 1; /* sleep(wait); */
 						cout << card2 + 1 << endl;
 					} 
@@ -733,10 +761,6 @@ class Player {
 				selfKnown(Hand.at(position), name);
 			}
 			else {
-				position = rand() % Hand.size(); playerPosition = rand() % 4 + 1;
-				player1 = rand() % 4 + 1; card1 = rand() % Hand.size();
-				player2 = rand() % 4 + 1; card2 = rand() % Hand.size();
-				
 				powerCard(Deck.back().power, wait, knock, P1, P2, P3, P4);
 				Stack.push_back(Deck.back()); Deck.pop_back();
 			}
