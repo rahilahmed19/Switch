@@ -1263,16 +1263,16 @@ int main() {
 	if (SorM == "S") { P2.isAI = true; P3.isAI = true; P4.isAI = true; }
 
 	// Comment below when done testing
-	if (SorM == "A") { P1.isAI = true; P2.isAI = true; P3.isAI = true; P4.isAI = true; }
+	// if (SorM == "A") { P1.isAI = true; P2.isAI = true; P3.isAI = true; P4.isAI = true; }
 
 	// Uncomment the below part when done testing
-	// cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
+	cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
 
-	int position1, position2; /* cin >> position1 >> position2; position1--; position2--; */
+	int position1, position2; cin >> position1 >> position2; position1--; position2--;
 
-	// P1.Hand.at(position1).knownToP1 = true; P1.Hand.at(position2).knownToP1 = true;
+	P1.Hand.at(position1).knownToP1 = true; P1.Hand.at(position2).knownToP1 = true;
 
-	// cout << "\nHere are your (known) cards:" << endl; P1.printHand(P1.name);
+	cout << "\nHere are your (known) cards:" << endl; P1.printHand(P1.name);
 
 	while (!knock) {
 		cout << "\nTurn " << playerTurn + 1 << endl;
