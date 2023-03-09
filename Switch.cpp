@@ -289,45 +289,6 @@ void switchRankEnd(Card& Temp, string& viewer) {
 	else { cout << "|      ?|  "; }
 }
 
-void printCard(Card& Temp, string& viewer) {
-	int rank = Temp.power; string suit = Temp.suit;
-	cout << " ———————   " << endl;
-	if (Temp.power >= 10 || Temp.power == 1) {
-		switchRankStart(Temp, viewer); cout << endl;
-	}
-	else {
-		cout << "|" << rank << "      |  " << endl;
-	}
-	cout << "|       |" << endl;
-	cout << "|   " << suit << "   |  " << endl;
-	cout << "|       |" << endl;
-	if (Temp.power >= 10 || Temp.power == 1) {
-		switchRankEnd(Temp, viewer); cout << endl;
-	}
-	else {
-		cout << "|      " << rank << "|  " << endl;
-	}
-	cout << " ———————   " << endl;
-}
-
-void printStack(vector<Card>& Stack, string& viewer) {
-	if (Stack.size() == 1) { printCard(Stack.at(0), viewer); }
-	else {
-		int i = Stack.size(); i--;
-		Card Temp = Stack.at(i - 1); int rank = Temp.power;
-		Card Temp2 = Stack.at(i); int rank2 = Temp.power; string suit2 = Temp.suit;
-		cout << " ——————— " << endl;
-		switchRankStart(Temp, viewer); cout << endl;
-		cout << "|  ———————   " << endl;
-		cout << "| "; switchRankStart(Temp2, viewer); cout << endl;
-		cout << "| |       |  " << endl;
-		cout << "| |   " << suit2 << "   |" << endl;
-		cout << " —|       |  " << endl;
-		cout << "  "; switchRankEnd(Temp2, viewer); cout << endl;
-		cout << "   ———————   " << endl;
-	}
-}
-
 void printSuit(Card& Temp, string& viewer) {
 	string suit = Temp.suit;
 	if (viewer == "Player 1" && Temp.knownToP1) {
@@ -351,9 +312,48 @@ void printSuit(Card& Temp, string& viewer) {
 	}
 }
 
+void printCard(Card& Temp, string& viewer) {
+	int rank = Temp.power; string suit = Temp.suit;
+	cout << " ———————   " << endl;
+	if (Temp.power >= 10 || Temp.power == 1) {
+		switchRankStart(Temp, viewer); cout << endl;
+	}
+	else {
+		cout << "|" << rank << "      |  " << endl;
+	}
+	cout << "|       |" << endl;
+	printSuit(Temp, viewer); cout << endl;
+	cout << "|       |" << endl;
+	if (Temp.power >= 10 || Temp.power == 1) {
+		switchRankEnd(Temp, viewer); cout << endl;
+	}
+	else {
+		cout << "|      " << rank << "|  " << endl;
+	}
+	cout << " ———————   " << endl;
+}
+
+void printStack(vector<Card>& Stack, string& viewer) {
+	if (Stack.size() == 1) { printCard(Stack.at(0), viewer); }
+	else {
+		int i = Stack.size(); i--;
+		Card Temp = Stack.at(i - 1);
+		Card Temp2 = Stack.at(i); string suit2 = Temp2.suit;
+		cout << " ——————— " << endl;
+		switchRankStart(Temp, viewer); cout << endl;
+		cout << "|  ———————   " << endl;
+		cout << "| "; switchRankStart(Temp2, viewer); cout << endl;
+		cout << "| |       |  " << endl;
+		cout << "| |   " << suit2 << "   |" << endl;
+		cout << " —|       |  " << endl;
+		cout << "  "; switchRankEnd(Temp2, viewer); cout << endl;
+		cout << "   ———————   " << endl;
+	}
+}
+
 class Player {
 	public:
-		vector<Card> Hand; string name, answer = ""; int totalPoints, position, playerPosition, player1, player2, card1, card2, choices, ToF /* Three or four, for before or after knock */, drawAnswer = 0; bool isAI = false;
+		vector<Card> Hand; string name, answer = ""; int totalPoints, position, playerPosition, player1, player2, card1, card2, choices, ToF, drawAnswer = 0; bool isAI = false;
 
 		void printHand(string& viewer) {
 			if (Hand.size() <= 1) { printCard(Hand.at(0), name); }
@@ -401,47 +401,47 @@ class Player {
 			}
 		}
 		
-		void switchNT(int& player, int& card, Player& P1, Player& P2, Player& P3, Player& P4) {
+		void switchNT(int& player, int& card, string& viewer, Player& P1, Player& P2, Player& P3, Player& P4) {
 			Card Temp;
 			switch (player) {
 				case 1:
-					Temp = P1.Hand.at(card); printCard(Temp, P1.name); 
+					if (viewer == "Player 2") { P1.Hand.at(card).knownToP2 = true; }
+
+					if (viewer == "Player 3") { P1.Hand.at(card).knownToP3 = true; }
+
+					if (viewer == "Player 4") { P1.Hand.at(card).knownToP4 = true; }
 					
-					if (name == "Player 2") { P1.Hand.at(card).knownToP2 = true; }
-
-					if (name == "Player 3") { P1.Hand.at(card).knownToP3 = true; }
-
-					if (name == "Player 4") { P1.Hand.at(card).knownToP4 = true; }
+					printCard(Temp, viewer); 
 					break;
 				
 				case 2:
-					Temp = P2.Hand.at(card); printCard(Temp, P2.name); 
+					if (viewer == "Player 1") { P2.Hand.at(card).knownToP1 = true; }
+
+					if (viewer == "Player 3") { P2.Hand.at(card).knownToP3 = true; }
+
+					if (viewer == "Player 4") { P2.Hand.at(card).knownToP4 = true; }
 					
-					if (name == "Player 1") { P1.Hand.at(card).knownToP1 = true; }
-
-					if (name == "Player 3") { P1.Hand.at(card).knownToP3 = true; }
-
-					if (name == "Player 4") { P1.Hand.at(card).knownToP4 = true; }
+					printCard(Temp, viewer); 
 					break;
 				
 				case 3:
-					Temp = P3.Hand.at(card); printCard(Temp, P3.name); 
+					if (viewer == "Player 1") { P3.Hand.at(card).knownToP1 = true; }
 					
-					if (name == "Player 1") { P1.Hand.at(card).knownToP1 = true; }
+					if (viewer == "Player 2") { P3.Hand.at(card).knownToP2 = true; }
 					
-					if (name == "Player 2") { P1.Hand.at(card).knownToP2 = true; }
+					if (viewer == "Player 4") { P3.Hand.at(card).knownToP4 = true; }
 					
-					if (name == "Player 4") { P1.Hand.at(card).knownToP4 = true; }
+					printCard(Temp, viewer); 
 					break;
 				
 				case 4:
-					Temp = P4.Hand.at(card); printCard(Temp, P4.name); 
+					if (viewer == "Player 1") { P4.Hand.at(card).knownToP1 = true; }
 
-					if (name == "Player 1") { P1.Hand.at(card).knownToP1 = true; }
+					if (viewer == "Player 2") { P4.Hand.at(card).knownToP2 = true; }
 
-					if (name == "Player 2") { P1.Hand.at(card).knownToP2 = true; }
-
-					if (name == "Player 3") { P1.Hand.at(card).knownToP3 = true; }
+					if (viewer == "Player 3") { P4.Hand.at(card).knownToP3 = true; }
+					
+					printCard(Temp, viewer);
 					break;
 				
 				default:
@@ -510,36 +510,28 @@ class Player {
 
 		void selfKnown(Card& Temp, string& name) {
 			if (name == "Player 1") {
-				if (Temp.knownToP1) {
-					Hand.at(position).knownToP1 = true;
-					cout << "lmao1" << endl;
-				}
+				Hand.at(position).knownToP1 = true;
 			}
 
 			if (name == "Player 2") {
-				if (Temp.knownToP2) {
-					Hand.at(position).knownToP2 = true;
-					cout << "lmao2" << endl;
-				}
+				Hand.at(position).knownToP2 = true;
 			}
 
 			if (name == "Player 3") {
-				if (Temp.knownToP3) {
-					Hand.at(position).knownToP3 = true;
-					cout << "lmao3" << endl;
-				}
+				Hand.at(position).knownToP3 = true;
 			}
 
 			if (name == "Player 4") {
-				if (Temp.knownToP4) {
-					Hand.at(position).knownToP4 = true;
-					cout << "lmao4" << endl;
-				}
+				Hand.at(position).knownToP4 = true;
 			}
 		}
 
 		void powerCard(int& power, int& wait, bool& knock, Player& P1, Player& P2, Player& P3, Player& P4) {
-			Card Temp;
+			Card Temp; string viewer = this->name;
+			
+			position = rand() % Hand.size(); playerPosition = rand() % 4 + 1;
+			player1 = rand() % 4 + 1; player2 = rand() % 4 + 1;
+				
 			switch (power) {
 				case 7:
 					cout << "\nYou can look at one of your own cards. Which one would you like to check? (Type the position of the card as a digit.)" << endl;
@@ -554,7 +546,7 @@ class Player {
 
 					selfKnown(Hand.at(position), name);
 
-					cout << "\nThe card is: " << endl; printCard(Hand.at(position), name);
+					cout << "\nThe card is: " << endl; printCard(Hand.at(position), name); 
 					break;
 				
 				case 8:
@@ -587,13 +579,19 @@ class Player {
 
 					if (isAI) { 
 						cout << "\n" << name << " keeps thinking." << endl;
+
+						if (playerPosition == 1) { position = rand() % P1.Hand.size(); }
+						if (playerPosition == 2) { position = rand() % P2.Hand.size(); }
+						if (playerPosition == 3) { position = rand() % P3.Hand.size(); }
+						if (playerPosition == 4) { position = rand() % P4.Hand.size(); }
+						
 						wait = rand() % 3 + 1; sleep(wait);
 						cout << (position + 1) << endl;
 					} 
 					else { cin >> position; position--; }
 					
 					cout << "\nThe card is: " << endl;
-					switchNT(playerPosition, position, P1, P2, P3, P4);
+					switchNT(playerPosition, position, viewer, P1, P2, P3, P4);
 					break;
 				
 				case 10:
@@ -609,14 +607,20 @@ class Player {
 					cout << "\nWhich one of their cards would you like to see? (Type the position of the card as a digit.)" << endl;
 					
 					if (isAI) { 
-						cout << "\n" << name << " continues to think." << endl;
-						wait = rand() % 5 + 3; sleep(wait);
+						cout << "\n" << name << " keeps thinking." << endl;
+
+						if (playerPosition == 1) { position = rand() % P1.Hand.size(); }
+						if (playerPosition == 2) { position = rand() % P2.Hand.size(); }
+						if (playerPosition == 3) { position = rand() % P3.Hand.size(); }
+						if (playerPosition == 4) { position = rand() % P4.Hand.size(); }
+						
+						wait = rand() % 3 + 1; sleep(wait);
 						cout << (position + 1) << endl;
 					} 
 					else { cin >> position; position--; }
 					
 					cout << "\nThe card is: " << endl;
-					switchNT(playerPosition, position, P1, P2, P3, P4);
+					switchNT(playerPosition, position, viewer, P1, P2, P3, P4);
 					break;
 				
 				case 11:
@@ -634,8 +638,14 @@ class Player {
 
 					if (isAI) { 
 						cout << "\n" << name << " keeps thinking." << endl;
+
+						if (player1 == 1) { card1 = rand() % P1.Hand.size(); }
+						if (player1 == 2) { card1 = rand() % P2.Hand.size(); }
+						if (player1 == 3) { card1 = rand() % P3.Hand.size(); }
+						if (player1 == 4) { card1 = rand() % P4.Hand.size(); }
+						
 						wait = rand() % 3 + 1; sleep(wait);
-						cout << card1 << endl;
+						cout << card1 + 1 << endl;
 					} 
 					else { cin >> card1; card1--; }
 					
@@ -652,8 +662,14 @@ class Player {
 					
 					if (isAI) { 
 						cout << "\n" << name << " apparently never stops thinking." << endl;
+
+						if (player2 == 1) { card2 = rand() % P1.Hand.size(); }
+						if (player2 == 2) { card2 = rand() % P2.Hand.size(); }
+						if (player2 == 3) { card2 = rand() % P3.Hand.size(); }
+						if (player2 == 4) { card2 = rand() % P4.Hand.size(); }
+						
 						wait = rand() % 3 + 1; sleep(wait);
-						cout << card2 << endl;
+						cout << card2 + 1 << endl;
 					} 
 					else { cin >> card2; card2--; }
 					
@@ -702,7 +718,7 @@ class Player {
 			else { cin >> position; position--; } Card Temp;
 		
 			Temp = Stack.back(); Stack.pop_back(); selfKnown(Hand.at(position), name);
-			Stack.push_back(Hand.at(position)); Hand.at(position) = Temp; cout << endl; 
+			Stack.push_back(Hand.at(position)); Hand.at(position) = Temp;
 			
 			Stack.back().knownToP1 = true; Stack.back().knownToP2 = true;
 			Stack.back().knownToP3 = true; Stack.back().knownToP4 = true;
@@ -711,7 +727,16 @@ class Player {
 		}
 
 		void drawCard(vector<Card>& Deck, vector<Card>& Stack, bool& knock, int& wait, Player& P1, Player& P2, Player& P3, Player& P4) {
-			cout << "\nYou drew " << Deck.back().name << " (" << Deck.back().point << "). Do you put the card in your hand, or onto the stack? (Type \"H\" or \"S\".) " << endl;
+			if (name == "Player 1") { Deck.back().knownToP1 = true; }
+
+			if (name == "Player 2") { Deck.back().knownToP2 = true; }
+
+			if (name == "Player 3") { Deck.back().knownToP3 = true; }
+
+			if (name == "Player 4") { Deck.back().knownToP4 = true; }
+
+			cout << "\nYou drew: " << endl; printCard(Deck.back(), name); 
+			cout << "\nDo you put the card in your hand, or onto the stack? (Type \"H\" or \"S\".) " << endl;
 			
 			if (isAI) {
 				cout << "\n" << name << " is thinking. (again.)" << endl; wait = rand() % 5 + 3; sleep(wait); 
@@ -726,20 +751,16 @@ class Player {
 
 				if (isAI) {
 					cout << "\n" << name << " is thinking. For the third time." << endl; wait = rand() % 5 + 3; sleep(wait); 
-					position = rand() % Hand.size();
+					position = rand() % Hand.size(); cout << position + 1 << endl;
 				}
 				
 				else { cin >> position; position--; }
 
 				Stack.push_back(Hand.at(position)); selfKnown(Hand.at(position), name);
 				Hand.at(position) = Deck.back(); Deck.pop_back(); 
-				selfKnown(Hand.at(position), name); cout << endl;
+				selfKnown(Hand.at(position), name);
 			}
 			else {
-				position = rand() % Hand.size(); playerPosition = rand() % 4 + 1;
-				player1 = rand() % 4 + 1; card1 = rand() % Hand.size();
-				player2 = rand() % 4 + 1; card2 = rand() % Hand.size();
-				
 				powerCard(Deck.back().power, wait, knock, P1, P2, P3, P4);
 				Stack.push_back(Deck.back()); Deck.pop_back();
 			}
@@ -749,12 +770,17 @@ class Player {
 			cout << "\nStack:" << endl; printStack(Stack, name);
 		}
 
-		void AI(bool& knock, int& wait) { // Send help
+		void AI(bool& knock, int& wait, int& playerTurn) { // Send help
 			// Easy
 			cout << "\n" << name << " is thinking." << endl;
-			wait = rand() % 8 + 3; sleep(wait);
+			wait = rand() % 6 + 3; sleep(wait);
+			
+			if (!knock) { ToF = rand() % 4 + 1; } 
+			else { ToF = rand() % 3 + 1; }
 
-			if (!knock) { ToF = rand() % 4 + 1; } else { ToF = rand() % 3 + 1; }
+			if (playerTurn < 4) { ToF = rand() % 3 + 1; }
+
+			if (name == "Player 1" && playerTurn == 0) { ToF = 3; } // P1 can only draw a card when starting the game
 
 			switch (ToF) {
 				case 1:
@@ -774,12 +800,43 @@ class Player {
 					break;
 				
 				default:
-					AI(knock, wait);
+					AI(knock, wait, playerTurn);
 					break;
 			}
 		}
 
-		void turn(int& wait, bool& knock, vector<Card>& Deck, vector<Card>& Stack, Player& P1, Player& P2, Player& P3, Player& P4) {
+		void turn(int& wait, int& playerTurn, int& position1, int& position2, string& SorM, bool& knock, vector<Card>& Deck, vector<Card>& Stack, Player& P1, Player& P2, Player& P3, Player& P4) {
+			if (playerTurn < 4 && !knock) {
+				cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
+				
+				if (isAI) { 
+					position1 = rand() % 4; position2 = rand() % 4;
+					while (position1 == position2) { position2 = rand() % 4; }
+					if (position1 > position2) { cout << position2 + 1 << " " << position1 + 1 << endl; }
+					else { cout << position1 + 1 << " " << position2 + 1 << endl; }
+				}
+				else {
+					cin >> position1 >> position2; position1--; position2--;
+				}
+				
+				if (name == "Player 1") {
+					P1.Hand.at(position1).knownToP1 = true; P1.Hand.at(position2).knownToP1 = true;
+					cout << "\nHere are your (known) cards:" << endl; P1.printHand(P1.name);
+				}
+				if (name == "Player 2") {
+					P2.Hand.at(position1).knownToP2 = true; P2.Hand.at(position2).knownToP2 = true;
+					cout << "\nHere are your (known) cards:" << endl; P2.printHand(P2.name);
+				}
+				if (name == "Player 3") {
+					P3.Hand.at(position1).knownToP3 = true; P3.Hand.at(position2).knownToP3 = true;
+					cout << "\nHere are your (known) cards:" << endl; P3.printHand(P3.name);
+				}
+				if (name == "Player 4") {
+					P4.Hand.at(position1).knownToP4 = true; P4.Hand.at(position2).knownToP4 = true;
+					cout << "\nHere are your (known) cards:" << endl; P4.printHand(P4.name);
+				}
+			}
+
 			if (!knock) {
 				cout << "\nWould you like to knock, eliminate a card from your hand, swap a card from your hand for the topmost card on the stack, or draw a card?" << endl;
 			}
@@ -797,7 +854,7 @@ class Player {
 				cout << "(Type \"E\", \"S\", or \"D\", case sensitive.)" << endl;
 			}
 			
-			if (isAI) { AI(knock, wait); } 
+			if (isAI) { AI(knock, wait, playerTurn); } 
 			
 			else { cin >> answer; }
 
@@ -809,7 +866,7 @@ class Player {
 			
 			else {
 				knock = true; cout << "\n" << name << " has knocked. This is the final round." << endl;
-				turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				turn(wait, playerTurn, position1, position2, SorM, knock, Deck, Stack, P1, P2, P3, P4);
 			}
 			
 			totalPoints = 0;
@@ -868,14 +925,8 @@ void printPoints(vector<Card>& Hand, int& totalPoints) {
 	}
 }
 
-void winner(Player& P1, Player& P2, Player& P3, Player& P4) {
-	Player lowest; vector<Player> Players{P1, P2, P3, P4};
-
-	cout << "\nNow that the game is over, let's add up the totals." << endl;
-	cout << "\nPlayer 1 has "; printPoints(P1.Hand, P1.totalPoints);
-	cout << "\nPlayer 2 has "; printPoints(P2.Hand, P2.totalPoints);
-	cout << "\nPlayer 3 has "; printPoints(P3.Hand, P3.totalPoints);
-	cout << "\nPlayer 4 has "; printPoints(P4.Hand, P4.totalPoints);
+void tiebreaker(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& Deck, int& tieToggle) {
+	int count = 0; int start = 0; bool tie = false; vector<Player> Players{P1, P2, P3, P4}; Player lowest;
 
 	for (int i = 1; i < Players.size(); i++) {
 		lowest = Players.at(i); int j = i - 1;
@@ -885,47 +936,286 @@ void winner(Player& P1, Player& P2, Player& P3, Player& P4) {
 		Players.at(j + 1) = lowest;
 	}
 	
-	cout << "\nIn first place, we have " << Players.at(0).name << " with " << Players.at(0).totalPoints; 
-	if (Players.at(0).totalPoints == 1) { cout << " point." << endl; }
-	else { cout << " points." << endl; }
-	
-	cout << "\nIn second place, we have " << Players.at(1).name << " with " << Players.at(1).totalPoints; 
-	if (Players.at(1).totalPoints == 1) { cout << " point." << endl; }
-	else { cout << " points." << endl; }
-	
-	cout << "\nIn third place, we have " << Players.at(2).name << " with " << Players.at(2).totalPoints; 
-	if (Players.at(2).totalPoints == 1) { cout << " point." << endl; }
-	else { cout << " points." << endl; }
-	
-	cout << "\nAnd in fourth place, we have " << Players.at(3).name << " with " << Players.at(3).totalPoints; 
-	if (Players.at(3).totalPoints == 1) { cout << " point." << endl; }
-	else { cout << " points." << endl; }
+	for (int i = 0; i < Players.size() - 1; i++) {
+		for (int j = i + 1; j < Players.size(); j++) {
+			if (Players.at(i).totalPoints == Players.at(j).totalPoints) {
+				if (count == 0) { start = i; } count++;
+			}
+		}
+	}
 
-	cout << "\nTherefore, our winner is " << Players.at(0).name << "!" << endl;
-	cout << "\nThank you for playing, I hope you had fun!" << endl;
+	if (count != 0) { tie = true; tieToggle++; }
+
+	switch (count) {
+		case 1:
+			cout << "\nIt appears that " << Players.at(start).name << " and " << Players.at(start + 1).name << " are tied for points!" << endl;
+			cout << "\nIn order to mitigate that, the two tied players will draw another card, then total their points again." << endl;
+
+			Deck.back().knownToP1 = true; Deck.back().knownToP2 = true;
+			Deck.back().knownToP3 = true; Deck.back().knownToP4 = true;
+
+			cout << "\n" << Players.at(start).name << " drew:" << endl;
+
+			if (Players.at(start).name == "Player 1") {
+				P1.Hand.push_back(Deck.back());
+				printCard(Deck.back(), P1.name); Deck.pop_back();
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back());
+				printCard(Deck.back(), P2.name); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back());
+				printCard(Deck.back(), P3.name); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back());
+				printCard(Deck.back(), P4.name); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+
+			Deck.back().knownToP1 = true; Deck.back().knownToP2 = true;
+			Deck.back().knownToP3 = true; Deck.back().knownToP4 = true;
+
+			cout << "\n" << Players.at(start + 1).name << " drew:" << endl;
+			
+			if (Players.at(start + 1).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); 
+				printCard(Deck.back(), P1.name); Deck.pop_back();
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); 
+				printCard(Deck.back(), P2.name); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); 
+				printCard(Deck.back(), P3.name); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); 
+				printCard(Deck.back(), P4.name); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+
+			break;
+	
+		case 2:
+			cout << "\nIt appears that Players " << start << ", " << start + 1 << ", and " << start + 2 << " are tied for points!" << endl;
+			cout << "\nIn order to mitigate that, the three tied players will draw another card, then total their points again." << endl;
+			
+			if (Players.at(start).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+			
+			if (Players.at(start + 1).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+	
+			if (Players.at(start + 2).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start + 2).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start + 2).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start + 2).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+
+			break;
+	
+		case 3:
+			cout << "\nIt appears that all the players tied for points!" << endl;
+			cout << "\nIn order to mitigate that, they will all draw another card, then total their points again." << endl;
+			
+			if (Players.at(start).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+	
+			if (Players.at(start + 1).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start + 1).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+
+			if (Players.at(start + 2).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start + 2).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start + 2).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start + 2).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+			
+			if (Players.at(start + 3).name == "Player 1") { 
+				P1.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P1.totalPoints += P1.Hand.back().point;
+			}
+			if (Players.at(start + 3).name == "Player 2") { 
+				P2.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P2.totalPoints += P2.Hand.back().point;
+			}
+			if (Players.at(start + 3).name == "Player 3") { 
+				P3.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P3.totalPoints += P3.Hand.back().point;
+			}
+			if (Players.at(start + 3).name == "Player 4") { 
+				P4.Hand.push_back(Deck.back()); Deck.pop_back(); 
+				P4.totalPoints += P4.Hand.back().point;
+			}
+
+			break;
+	
+		default:
+			break;
+	}
+
+	if (tie) { 
+		tiebreaker(P1, P2, P3, P4, Deck, tieToggle); 
+	}
+
+	else {
+		if (tieToggle != 0) {
+			cout << "\nNow that the tie has been broken, let's add up the totals again." << endl;
+			cout << "\nPlayer 1 has "; printPoints(P1.Hand, P1.totalPoints);
+			cout << "\nPlayer 2 has "; printPoints(P2.Hand, P2.totalPoints);
+			cout << "\nPlayer 3 has "; printPoints(P3.Hand, P3.totalPoints);
+			cout << "\nPlayer 4 has "; printPoints(P4.Hand, P4.totalPoints);
+		}
+
+		for (int i = 1; i < Players.size(); i++) {
+			lowest = Players.at(i); int j = i - 1;
+			while (j >= 0 && Players.at(j).totalPoints > lowest.totalPoints) {
+				Players.at(j + 1) = Players.at(j); j--;
+			}
+			Players.at(j + 1) = lowest;
+		}
+		
+		cout << "\nIn first place, we have " << Players.at(0).name << " with " << Players.at(0).totalPoints; 
+		if (Players.at(0).totalPoints == 1) { cout << " point." << endl; }
+		else { cout << " points." << endl; }
+		
+		cout << "\nIn second place, we have " << Players.at(1).name << " with " << Players.at(1).totalPoints; 
+		if (Players.at(1).totalPoints == 1) { cout << " point." << endl; }
+		else { cout << " points." << endl; }
+		
+		cout << "\nIn third place, we have " << Players.at(2).name << " with " << Players.at(2).totalPoints; 
+		if (Players.at(2).totalPoints == 1) { cout << " point." << endl; }
+		else { cout << " points." << endl; }
+		
+		cout << "\nAnd in fourth place, we have " << Players.at(3).name << " with " << Players.at(3).totalPoints; 
+		if (Players.at(3).totalPoints == 1) { cout << " point." << endl; }
+		else { cout << " points." << endl; }
+
+		cout << "\nTherefore, our winner is " << Players.at(0).name << "!" << endl;
+		cout << "\nThank you for playing, I hope you had fun!" << endl;
+	}
 }
 
-void finalRound(int& playerTurn, int& wait, bool& knock, vector<Card>& Deck, vector<Card>& Stack, Player& P1, Player& P2, Player& P3, Player& P4) {
+void winner(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& Deck, int& tieToggle) {
+	Player lowest; vector<Player> Players{P1, P2, P3, P4};
+
+	cout << "\nNow that the game is over, let's add up the totals." << endl;
+	cout << "\nPlayer 1 has "; printPoints(P1.Hand, P1.totalPoints);
+	cout << "\nPlayer 2 has "; printPoints(P2.Hand, P2.totalPoints);
+	cout << "\nPlayer 3 has "; printPoints(P3.Hand, P3.totalPoints);
+	cout << "\nPlayer 4 has "; printPoints(P4.Hand, P4.totalPoints);
+
+	tiebreaker(P1, P2, P3, P4, Deck, tieToggle);
+}
+
+void finalRound(int& wait, int& playerTurn, int& position1, int& position2, string& SorM, bool& knock, vector<Card>& Deck, vector<Card>& Stack, Player& P1, Player& P2, Player& P3, Player& P4) {
 	for (int i = 0; i < 3; i++) {
+		cout << "\nTurn " << playerTurn + 1 << endl;
 		switch (playerTurn % 4) {
 			case 0:
 				cout << "\nPlayer 1's final turn:" << endl;
-				P1.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P1.turn(wait, playerTurn, position1, position2, SorM, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 1:
 				cout << "\nPlayer 2's final turn:" << endl;
-				P2.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P2.turn(wait, playerTurn, position1, position2, SorM, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 2:
 				cout << "\nPlayer 3's final turn:" << endl;
-				P3.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P3.turn(wait, playerTurn, position1, position2, SorM, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 3:
 				cout << "\nPlayer 4's final turn:" << endl;
-				P4.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P4.turn(wait, playerTurn, position1, position2, SorM, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			default:
@@ -945,8 +1235,6 @@ int main() {
 	TwoDi.point = 2; ThreeDi.point = 3; FourDi.point = 4; FiveDi.point = 5; SixDi.point = 6; SevenDi.point = 7; EightDi.point = 8; NineDi.point = 9; TenDi.point = 10; JackDi.point = 10; QueenDi.point = 10; KingDi.point = 0; AceDi.point = 1; TwoCl.point = 2; ThreeCl.point = 3; FourCl.point = 4; FiveCl.point = 5; SixCl.point = 6; SevenCl.point = 7; EightCl.point = 8; NineCl.point = 9; TenCl.point = 10; JackCl.point = 10; QueenCl.point = 10; KingCl.point = 10; AceCl.point = 1; TwoHe.point = 2; ThreeHe.point = 3; FourHe.point = 4; FiveHe.point = 5; SixHe.point = 6; SevenHe.point = 7; EightHe.point = 8; NineHe.point = 9; TenHe.point = 10; JackHe.point = 10; QueenHe.point = 10; KingHe.point = 0; AceHe.point = 1; TwoSp.point = 2; ThreeSp.point = 3; FourSp.point = 4; FiveSp.point = 5; SixSp.point = 6; SevenSp.point = 7; EightSp.point = 8; NineSp.point = 9; TenSp.point = 10; JackSp.point = 10; QueenSp.point = 10; KingSp.point = 10; AceSp.point = 1;
 	
 	TwoDi.power = 2; ThreeDi.power = 3; FourDi.power = 4; FiveDi.power = 5; SixDi.power = 6; SevenDi.power = 7; EightDi.power = 8; NineDi.power = 9; TenDi.power = 10; JackDi.power = 11; QueenDi.power = 12; KingDi.power = 13; AceDi.power = 1; TwoCl.power = 2; ThreeCl.power = 3; FourCl.power = 4; FiveCl.power = 5; SixCl.power = 6; SevenCl.power = 7; EightCl.power = 8; NineCl.power = 9; TenCl.power = 10; JackCl.power = 11; QueenCl.power = 12; KingCl.power = 13; AceCl.power = 1; TwoHe.power = 2; ThreeHe.power = 3; FourHe.power = 4; FiveHe.power = 5; SixHe.power = 6; SevenHe.power = 7; EightHe.power = 8; NineHe.power = 9; TenHe.power = 10; JackHe.power = 11; QueenHe.power = 12; KingHe.power = 13; AceHe.power = 1; TwoSp.power = 2; ThreeSp.power = 3; FourSp.power = 4; FiveSp.power = 5; SixSp.power = 6; SevenSp.power = 7; EightSp.power = 8; NineSp.power = 9; TenSp.power = 10; JackSp.power = 11; QueenSp.power = 12; KingSp.power = 13; AceSp.power = 1;
-	
-	// TwoDi.knownToYou = true; ThreeDi.knownToYou = true; FourDi.knownToYou = true; FiveDi.knownToYou = true; SixDi.knownToYou = true; SevenDi.knownToYou = true; EightDi.knownToYou = true; NineDi.knownToYou = true; TenDi.knownToYou = true; JackDi.knownToYou = true; QueenDi.knownToYou = true; KingDi.knownToYou = true; AceDi.knownToYou = true; TwoCl.knownToYou = true; ThreeCl.knownToYou = true; FourCl.knownToYou = true; FiveCl.knownToYou = true; SixCl.knownToYou = true; SevenCl.knownToYou = true; EightCl.knownToYou = true; NineCl.knownToYou = true; TenCl.knownToYou = true; JackCl.knownToYou = true; QueenCl.knownToYou = true; KingCl.knownToYou = true; AceCl.knownToYou = true; TwoHe.knownToYou = true; ThreeHe.knownToYou = true; FourHe.knownToYou = true; FiveHe.knownToYou = true; SixHe.knownToYou = true; SevenHe.knownToYou = true; EightHe.knownToYou = true; NineHe.knownToYou = true; TenHe.knownToYou = true; JackHe.knownToYou = true; QueenHe.knownToYou = true; KingHe.knownToYou = true; AceHe.knownToYou = true; TwoSp.knownToYou = true; ThreeSp.knownToYou = true; FourSp.knownToYou = true; FiveSp.knownToYou = true; SixSp.knownToYou = true; SevenSp.knownToYou = true; EightSp.knownToYou = true; NineSp.knownToYou = true; TenSp.knownToYou = true; JackSp.knownToYou = true; QueenSp.knownToYou = true; KingSp.knownToYou = true; AceSp.knownToYou = true;
 
 	Player P1; Player P2; Player P3; Player P4;
 	P1.name = "Player 1"; P2.name = "Player 2"; P3.name = "Player 3"; P4.name = "Player 4";
@@ -955,7 +1243,7 @@ int main() {
 
 	vector<Player> Players{P1, P2, P3, P4}; vector<Card> Stack; srand(time(NULL));
 
-	bool knock = false; int playerTurn = 0; int wait = 0; string SorM = "";
+	bool knock = false; int tieToggle = 0; int playerTurn = 0; int wait = 0; string SorM = "";
 
 	for (int i = 0; i < Deck.size(); i++) {
 		Deck.at(i).knownToP1 = false;
@@ -966,8 +1254,6 @@ int main() {
 
 	shuffleDeck(Deck); distributeHand(P1, P2, P3, P4, Deck);
 
-	// Player lmao; lmao.Hand.assign(Deck.begin(), Deck.end()); lmao.printHand();
-
 	cout << "\nHello, and welcome to Switch!" << endl;
 
 	cout << "\nYou can either play single player, against AI players, or hotseat multiplayer, where everyone takes turns on this computer. (Type \"S\" or \"M\".)" << endl;
@@ -976,6 +1262,10 @@ int main() {
 
 	if (SorM == "S") { P2.isAI = true; P3.isAI = true; P4.isAI = true; }
 
+	// Comment below when done testing
+	// if (SorM == "A") { P1.isAI = true; P2.isAI = true; P3.isAI = true; P4.isAI = true; }
+
+	// Uncomment the below part when done testing
 	cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
 
 	int position1, position2; cin >> position1 >> position2; position1--; position2--;
@@ -985,59 +1275,30 @@ int main() {
 	cout << "\nHere are your (known) cards:" << endl; P1.printHand(P1.name);
 
 	while (!knock) {
+		cout << "\nTurn " << playerTurn + 1 << endl;
 		switch (playerTurn % 4) {
 			case 0:
 				cout << "\nPlayer 1's turn:" << endl;
 				
-				P1.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P1.turn(wait, playerTurn, position1, position2, SorM, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 1:
 				cout << "\nPlayer 2's turn:" << endl;
 
-				if (playerTurn < 4 && SorM == "M") {
-					cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
-
-					cin >> position1 >> position2; position1--; position2--;
-
-					P2.Hand.at(position1).knownToP2 = true; P2.Hand.at(position2).knownToP2 = true;
-
-					cout << "\nHere are your (known) cards:" << endl; P2.printHand(P2.name);
-				}
-
-				P2.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P2.turn(wait, playerTurn, position1, position2, SorM, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 2:
 				cout << "\nPlayer 3's turn:" << endl;
 
-				if (playerTurn < 4 && SorM == "M") {
-					cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
-
-					cin >> position1 >> position2; position1--; position2--;
-
-					P3.Hand.at(position1).knownToP3 = true; P3.Hand.at(position2).knownToP3 = true;
-
-					cout << "\nHere are your (known) cards:" << endl; P3.printHand(P3.name);
-				}
-
-				P3.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P3.turn(wait, playerTurn, position1, position2, SorM, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			case 3:
 				cout << "\nPlayer 4's turn:" << endl;
 
-				if (playerTurn < 4 && SorM == "M") {
-					cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
-
-					cin >> position1 >> position2; position1--; position2--;
-
-					P4.Hand.at(position1).knownToP4 = true; P4.Hand.at(position2).knownToP4 = true;
-
-					cout << "\nHere are your (known) cards:" << endl; P4.printHand(P4.name);
-				}
-
-				P4.turn(wait, knock, Deck, Stack, P1, P2, P3, P4);
+				P4.turn(wait, playerTurn, position1, position2, SorM, knock, Deck, Stack, P1, P2, P3, P4);
 				break;
 			
 			default:
@@ -1046,9 +1307,9 @@ int main() {
 		playerTurn++;
 	}
 
-	finalRound(playerTurn, wait, knock, Deck, Stack, P1, P2, P3, P4);
+	finalRound(wait, playerTurn, position1, position2, SorM, knock, Deck, Stack, P1, P2, P3, P4);
 
-	winner(P1, P2, P3, P4);
+	winner(P1, P2, P3, P4, Deck, tieToggle);
 	
 	return 0;
 }
