@@ -7,7 +7,7 @@
 #include <time.h>
 using namespace std;
 
-// Test
+// Main
 
 class Card {
 	public:
