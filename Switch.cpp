@@ -842,26 +842,31 @@ class Player {
 				}
 			}
 
-			if (!knock) {
-				cout << "\nWould you like to knock, eliminate a card from your hand, swap a card from your hand for the topmost card on the stack, or draw a card?" << endl;
+			if (playerTurn == 0) {
+				cout << "\nSince this is the first turn, you can only draw a card. You'll get a choice next time you go!" << endl;
 			}
 			else {
-				cout << "\nWould you like to eliminate a card from your hand, swap a card from your hand for the topmost card on the stack, or draw a card?" << endl;
-			}
-			
-			cout << "Keep in mind you can only eliminate a card if it matches the topmost card in the stack; if it doesn't, the card returns to your hand and you draw another card." << endl;
+				if (!knock) {
+					cout << "\nWould you like to knock, eliminate a card from your hand, swap a card from your hand for the topmost card on the stack, or draw a card?" << endl;
+				}
+				else {
+					cout << "\nWould you like to eliminate a card from your hand, swap a card from your hand for the topmost card on the stack, or draw a card?" << endl;
+				}
+				
+				cout << "Keep in mind you can only eliminate a card if it matches the topmost card in the stack; if it doesn't, the card returns to your hand and you draw another card." << endl;
 
-			if (!knock) {
-				cout << "Also keep in mind that once you knock, the next round will be the final round; everyone goes one last time and once it is your turn again, all the cards are revealed and the player with the least amount of points wins." << endl;
-				cout << "(Type \"K\", \"E\", \"S\", or \"D\", case sensitive.)" << endl;
-			}
-			else {
-				cout << "(Type \"E\", \"S\", or \"D\", case sensitive.)" << endl;
+				if (!knock) {
+					cout << "Also keep in mind that once you knock, the next round will be the final round; everyone goes one last time and once it is your turn again, all the cards are revealed and the player with the least amount of points wins." << endl;
+					cout << "(Type \"K\", \"E\", \"S\", or \"D\", case sensitive.)" << endl;
+				}
+				else {
+					cout << "(Type \"E\", \"S\", or \"D\", case sensitive.)" << endl;
+				}
+			
+				if (isAI) { AI(knock, wait, playerTurn); } else { cin >> answer; } 
 			}
 			
-			if (isAI) { AI(knock, wait, playerTurn); } 
-			
-			else { cin >> answer; }
+			if (playerTurn == 0) { answer = "D"; }
 
 			if (answerCompare(answer, "E")) { eliminateCard(Stack, Deck, knock, wait); }
 			
