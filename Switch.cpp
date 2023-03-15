@@ -5,6 +5,7 @@
 #include <random>
 #include <unistd.h>
 #include <time.h>
+#include <cstring>
 using namespace std;
 
 // Test
@@ -14,6 +15,10 @@ class Card {
 		string name, suit; int point, power; // Only exists for the Power Card function, to help differentiate between the face cards
 		bool knownToYou, knownToP1, knownToP2, knownToP3, knownToP4 = false;
 };
+
+bool answerCompare(string input, string compare) {
+	return !(strcasecmp(input.c_str(), compare.c_str()));
+}
 
 void switchRankStart(Card& Temp, string& viewer) {
 	int power = Temp.power; string point;
@@ -746,7 +751,7 @@ class Player {
 			
 			else { cin >> answer; }
 			
-			if (answer == "H") {
+			if (answerCompare(answer, "H")) {
 				cout << "\nChoose which one of your cards to swap it out with. (Type the position of the card as a digit.)" << endl;
 
 				if (isAI) {
@@ -858,11 +863,11 @@ class Player {
 			
 			else { cin >> answer; }
 
-			if (answer == "E") { eliminateCard(Stack, Deck, knock, wait); }
+			if (answerCompare(answer, "E")) { eliminateCard(Stack, Deck, knock, wait); }
 			
-			else if (answer == "S") { swapCard(Stack, knock, wait); }
+			else if (answerCompare(answer, "S")) { swapCard(Stack, knock, wait); }
 
-			else if (answer == "D") { drawCard(Deck, Stack, knock, wait, P1, P2, P3, P4); }
+			else if (answerCompare(answer, "D")) { drawCard(Deck, Stack, knock, wait, P1, P2, P3, P4); }
 			
 			else {
 				knock = true; cout << "\n" << name << " has knocked. This is the final round." << endl;
@@ -1243,7 +1248,7 @@ int main() {
 
 	vector<Player> Players{P1, P2, P3, P4}; vector<Card> Stack; srand(time(NULL));
 
-	bool knock = false; int tieToggle = 0; int playerTurn = 0; int wait = 0; string SorM = "";
+	bool knock = false; int tieToggle = 0; int playerTurn = 0; int wait = 0; int position1 = 0; int position2 = 0;  string SorM = "";
 
 	for (int i = 0; i < Deck.size(); i++) {
 		Deck.at(i).knownToP1 = false;
@@ -1259,20 +1264,11 @@ int main() {
 	cout << "\nYou can either play single player, against AI players, or hotseat multiplayer, where everyone takes turns on this computer. (Type \"S\" or \"M\".)" << endl;
 
 	cin >> SorM;
-
-	if (SorM == "S") { P2.isAI = true; P3.isAI = true; P4.isAI = true; }
+	
+	if (answerCompare(SorM, "S")) { P2.isAI = true; P3.isAI = true; P4.isAI = true; }
 
 	// Comment below when done testing
-	// if (SorM == "A") { P1.isAI = true; P2.isAI = true; P3.isAI = true; P4.isAI = true; }
-
-	// Uncomment the below part when done testing
-	cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
-
-	int position1, position2; cin >> position1 >> position2; position1--; position2--;
-
-	P1.Hand.at(position1).knownToP1 = true; P1.Hand.at(position2).knownToP1 = true;
-
-	cout << "\nHere are your (known) cards:" << endl; P1.printHand(P1.name);
+	// if (answerCompare(SorM, "A")) { P1.isAI = true; P2.isAI = true; P3.isAI = true; P4.isAI = true; }
 
 	while (!knock) {
 		cout << "\nTurn " << playerTurn + 1 << endl;
