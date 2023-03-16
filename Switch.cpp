@@ -545,7 +545,7 @@ class Player {
 					
 					if (isAI) { 
 						cout << "\n" << name << " continues to think." << endl;
-						wait = rand() % 5 + 3; /* sleep(wait); */
+						wait = rand() % 5 + 3; sleep(wait);
 						cout << (position + 1) << endl;
 					} 
 					
@@ -561,7 +561,7 @@ class Player {
 					
 					if (isAI) { 
 						cout << "\n" << name << " continues to think." << endl;
-						wait = rand() % 5 + 3; /* sleep(wait); */
+						wait = rand() % 5 + 3; sleep(wait);
 						cout << (position + 1) << endl;
 					} 
 					
@@ -577,7 +577,7 @@ class Player {
 
 					if (isAI) { 
 						cout << "\n" << name << " continues to think." << endl;
-						wait = rand() % 5 + 3; /* sleep(wait); */
+						wait = rand() % 5 + 3; sleep(wait);
 						cout << playerPosition << endl;
 					} 
 					else { cin >> playerPosition; }
@@ -592,7 +592,7 @@ class Player {
 						if (playerPosition == 3) { position = rand() % P3.Hand.size(); }
 						if (playerPosition == 4) { position = rand() % P4.Hand.size(); }
 						
-						wait = rand() % 3 + 1; /* sleep(wait); */
+						wait = rand() % 3 + 1; sleep(wait);
 						cout << (position + 1) << endl;
 					} 
 					else { cin >> position; position--; }
@@ -606,7 +606,7 @@ class Player {
 
 					if (isAI) { 
 						cout << "\n" << name << " keeps thinking." << endl;
-						wait = rand() % 3 + 1; /* sleep(wait); */
+						wait = rand() % 3 + 1; sleep(wait);
 						cout << playerPosition << endl;
 					} 
 					else { cin >> playerPosition; }
@@ -621,7 +621,7 @@ class Player {
 						if (playerPosition == 3) { position = rand() % P3.Hand.size(); }
 						if (playerPosition == 4) { position = rand() % P4.Hand.size(); }
 						
-						wait = rand() % 3 + 1; /* sleep(wait); */
+						wait = rand() % 3 + 1; sleep(wait);
 						cout << (position + 1) << endl;
 					} 
 					else { cin >> position; position--; }
@@ -636,7 +636,7 @@ class Player {
 
 					if (isAI) { 
 						cout << "\n" << name << " continues to think." << endl;
-						wait = rand() % 5 + 3; /* sleep(wait); */
+						wait = rand() % 5 + 3; sleep(wait);
 						cout << player1 << endl;
 					} 
 					else { cin >> player1; }
@@ -651,7 +651,7 @@ class Player {
 						if (player1 == 3) { card1 = rand() % P3.Hand.size(); }
 						if (player1 == 4) { card1 = rand() % P4.Hand.size(); }
 						
-						wait = rand() % 3 + 1; /* sleep(wait); */
+						wait = rand() % 3 + 1; sleep(wait);
 						cout << card1 + 1 << endl;
 					} 
 					else { cin >> card1; card1--; }
@@ -660,7 +660,7 @@ class Player {
 					
 					if (isAI) { 
 						cout << "\n" << name << "'s still thinking." << endl;
-						wait = rand() % 5 + 3; /* sleep(wait); */
+						wait = rand() % 5 + 3; sleep(wait);
 						cout << player2 << endl;
 					} 
 					else { cin >> player2; }
@@ -675,7 +675,7 @@ class Player {
 						if (player2 == 3) { card2 = rand() % P3.Hand.size(); }
 						if (player2 == 4) { card2 = rand() % P4.Hand.size(); }
 						
-						wait = rand() % 3 + 1; /* sleep(wait); */
+						wait = rand() % 3 + 1; sleep(wait);
 						cout << card2 + 1 << endl;
 					} 
 					else { cin >> card2; card2--; }
@@ -692,7 +692,7 @@ class Player {
 			cout << "\nChoose which one of your cards you want to eliminate. (Type the position of the card as a digit.)" << endl;
 			
 			if (isAI) {
-				cout << "\n" << name << " is thinking. (again.)" << endl; wait = rand() % 5 + 3; /* sleep(wait); */ 
+				cout << "\n" << name << " is thinking. (again.)" << endl; wait = rand() % 5 + 3; sleep(wait); 
 				position = rand() % Hand.size(); cout << (position + 1) << endl;
 			}
 			
@@ -718,7 +718,7 @@ class Player {
 			cout << "\nChoose which one of your cards you want to swap out. (Type the position of the card as a digit.)" << endl;
 
 			if (isAI) {
-				cout << "\n" << name << " is thinking. (again.)" << endl; wait = rand() % 5 + 3; /* sleep(wait); */
+				cout << "\n" << name << " is thinking. (again.)" << endl; wait = rand() % 5 + 3; sleep(wait);
 				position = rand() % Hand.size(); cout << (position + 1) << endl;
 			} 
 			
@@ -746,7 +746,7 @@ class Player {
 			cout << "\nDo you put the card in your hand, or onto the stack? (Type \"H\" or \"S\".) " << endl;
 			
 			if (isAI) {
-				cout << "\n" << name << " is thinking. (again.)" << endl; wait = rand() % 5 + 3; /* sleep(wait); */ 
+				cout << "\n" << name << " is thinking. (again.)" << endl; wait = rand() % 5 + 3; sleep(wait); 
 				drawAnswer = rand() % 2; if (drawAnswer) { answer = "H"; } else { answer = "S"; }
 				cout << answer << endl;
 			} 
@@ -757,7 +757,7 @@ class Player {
 				cout << "\nChoose which one of your cards to swap it out with. (Type the position of the card as a digit.)" << endl;
 
 				if (isAI) {
-					cout << "\n" << name << " is thinking. For the third time." << endl; wait = rand() % 5 + 3; /* sleep(wait); */ 
+					cout << "\n" << name << " is thinking. For the third time." << endl; wait = rand() % 5 + 3; sleep(wait); 
 					position = rand() % Hand.size(); cout << position + 1 << endl;
 				}
 				
@@ -780,7 +780,7 @@ class Player {
 		void AI(bool& knock, int& wait, int& playerTurn) { // Send help
 			// Easy
 			cout << "\n" << name << " is thinking." << endl;
-			wait = rand() % 6 + 3; /* sleep(wait); */
+			wait = rand() % 6 + 3; sleep(wait);
 			
 			int choice = rand() % 100 + 1;
 			if (!knock) {
