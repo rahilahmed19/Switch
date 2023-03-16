@@ -2,7 +2,7 @@ Switch Brainstorming
 
 Immediate concern #0: I think there are still some printing errors left occasionally with the cards but I can't figure out a surefire way to fix it BECAUSE THEY'RE ALWAYS CORRECT WHENEVER I DOULBE CHECK WITH THE NAME but alas it is what it is, we're p much done now
 
-Immediate concern #1: Change probabilities so AI knocks and eliminates less
+Immediate concern #1: You could, at some point, make while loops for input so that only correct inputs are, uh, inputted, but that's for another time for now we take a break LMAO
 
 So we got an easy and a hard; easy is completely probability-based, weighted towards more bad decisions than good (maybe 40-60?), and hard is the "objective" right move given the information the player has known to them
 
