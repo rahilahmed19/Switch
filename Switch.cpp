@@ -784,9 +784,9 @@ class Player {
 			
 			int choice = rand() % 100 + 1;
 			if (!knock) {
-				if (choice <= 40) { ToF = 3; } 
-				if (choice > 40 && choice <= 75) { ToF = 2; }
 				if (choice > 75 && choice <= 85) { ToF = 1; } 
+				if (choice > 40 && choice <= 75) { ToF = 2; }
+				if (choice <= 40) { ToF = 3; } 
 				if (choice > 85) { ToF = 4; }
 			}
 
