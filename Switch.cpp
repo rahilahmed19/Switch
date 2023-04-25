@@ -5,6 +5,7 @@
 #include <random>
 #include <unistd.h>
 #include <time.h>
+#include <cstring>
 using namespace std;
 
 // Main
@@ -14,6 +15,10 @@ class Card {
 		string name, suit; int point, power; // Only exists for the Power Card function, to help differentiate between the face cards
 		bool knownToYou, knownToP1, knownToP2, knownToP3, knownToP4 = false;
 };
+
+bool answerCompare(string input, string compare) {
+	return !(strcasecmp(input.c_str(), compare.c_str()));
+}
 
 void switchRankStart(Card& Temp, string& viewer) {
 	int power = Temp.power; string point;
@@ -354,6 +359,8 @@ void printStack(vector<Card>& Stack, string& viewer) {
 class Player {
 	public:
 		vector<Card> Hand; string name, answer = ""; int totalPoints, position, playerPosition, player1, player2, card1, card2, choices, ToF, drawAnswer = 0; bool isAI = false;
+		// For stats; E, S, and D stand for Eliminate, Swap, and Draw respectively, C stands for count
+		int EC = 0; int SC = 0; int DC = 0;
 
 		void printHand(string& viewer) {
 			if (Hand.size() <= 1) { printCard(Hand.at(0), name); }
@@ -746,7 +753,7 @@ class Player {
 			
 			else { cin >> answer; }
 			
-			if (answer == "H") {
+			if (answerCompare(answer, "H")) {
 				cout << "\nChoose which one of your cards to swap it out with. (Type the position of the card as a digit.)" << endl;
 
 				if (isAI) {
@@ -775,24 +782,33 @@ class Player {
 			cout << "\n" << name << " is thinking." << endl;
 			wait = rand() % 6 + 3; sleep(wait);
 			
-			if (!knock) { ToF = rand() % 4 + 1; } 
-			else { ToF = rand() % 3 + 1; }
+			int choice = rand() % 100 + 1;
+			if (!knock) {
+				if (choice > 75 && choice <= 85) { ToF = 1; } 
+				if (choice > 40 && choice <= 75) { ToF = 2; }
+				if (choice <= 40) { ToF = 3; } 
+				if (choice > 85) { ToF = 4; }
+			}
 
-			if (playerTurn < 4) { ToF = rand() % 3 + 1; }
+			if (playerTurn < 4 || knock) {
+				if (choice <= 60) { ToF = 3; } 
+				if (choice > 60 && choice <= 85) { ToF = 2; }
+				if (choice > 85) { ToF = 1; }
+			}
 
-			if (name == "Player 1" && playerTurn == 0) { ToF = 3; } // P1 can only draw a card when starting the game
+			if (playerTurn == 0) { ToF = 3; } // P1 can only draw a card when starting the game
 
 			switch (ToF) {
 				case 1:
-					answer = "E"; cout << answer << endl;
+					answer = "E"; cout << answer << endl; EC++;
 					break;
 				
 				case 2:
-					answer = "S"; cout << answer << endl; 
+					answer = "S"; cout << answer << endl; SC++;
 					break;
 				
 				case 3:
-					answer = "D"; cout << answer << endl;
+					answer = "D"; cout << answer << endl; DC++;
 					break;
 				
 				case 4:
@@ -837,32 +853,37 @@ class Player {
 				}
 			}
 
-			if (!knock) {
-				cout << "\nWould you like to knock, eliminate a card from your hand, swap a card from your hand for the topmost card on the stack, or draw a card?" << endl;
+			if (playerTurn == 0) {
+				cout << "\nSince this is the first turn, you can only draw a card. You'll get a choice next time you go!" << endl;
 			}
 			else {
-				cout << "\nWould you like to eliminate a card from your hand, swap a card from your hand for the topmost card on the stack, or draw a card?" << endl;
+				if (!knock) {
+					cout << "\nWould you like to knock, eliminate a card from your hand, swap a card from your hand for the topmost card on the stack, or draw a card?" << endl;
+				}
+				else {
+					cout << "\nWould you like to eliminate a card from your hand, swap a card from your hand for the topmost card on the stack, or draw a card?" << endl;
+				}
+				
+				cout << "Keep in mind you can only eliminate a card if it matches the topmost card in the stack; if it doesn't, the card returns to your hand and you draw another card." << endl;
+
+				if (!knock) {
+					cout << "Also keep in mind that once you knock, the next round will be the final round; everyone goes one last time and once it is your turn again, all the cards are revealed and the player with the least amount of points wins." << endl;
+					cout << "(Type \"K\", \"E\", \"S\", or \"D\", case sensitive.)" << endl;
+				}
+				else {
+					cout << "(Type \"E\", \"S\", or \"D\", case sensitive.)" << endl;
+				}
+			
+				if (isAI) { AI(knock, wait, playerTurn); } else { cin >> answer; } 
 			}
 			
-			cout << "Keep in mind you can only eliminate a card if it matches the topmost card in the stack; if it doesn't, the card returns to your hand and you draw another card." << endl;
+			if (playerTurn == 0) { answer = "D"; }
 
-			if (!knock) {
-				cout << "Also keep in mind that once you knock, the next round will be the final round; everyone goes one last time and once it is your turn again, all the cards are revealed and the player with the least amount of points wins." << endl;
-				cout << "(Type \"K\", \"E\", \"S\", or \"D\", case sensitive.)" << endl;
-			}
-			else {
-				cout << "(Type \"E\", \"S\", or \"D\", case sensitive.)" << endl;
-			}
+			if (answerCompare(answer, "E")) { eliminateCard(Stack, Deck, knock, wait); }
 			
-			if (isAI) { AI(knock, wait, playerTurn); } 
-			
-			else { cin >> answer; }
+			else if (answerCompare(answer, "S")) { swapCard(Stack, knock, wait); }
 
-			if (answer == "E") { eliminateCard(Stack, Deck, knock, wait); }
-			
-			else if (answer == "S") { swapCard(Stack, knock, wait); }
-
-			else if (answer == "D") { drawCard(Deck, Stack, knock, wait, P1, P2, P3, P4); }
+			else if (answerCompare(answer, "D")) { drawCard(Deck, Stack, knock, wait, P1, P2, P3, P4); }
 			
 			else {
 				knock = true; cout << "\n" << name << " has knocked. This is the final round." << endl;
@@ -925,7 +946,63 @@ void printPoints(vector<Card>& Hand, int& totalPoints) {
 	}
 }
 
-void tiebreaker(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& Deck, int& tieToggle) {
+void stats(Player& P1, Player& P2, Player& P3, Player& P4, int& playerTurn) {
+	int TEC = 0; int TSC = 0; int TDC = 0; Player highest; vector<Player> Players{P1, P2, P3, P4};
+	for (int i = 0; i < Players.size(); i++) {
+		TEC += Players.at(i).EC;
+		TSC += Players.at(i).SC;
+		TDC += Players.at(i).DC;
+	}
+	
+	cout << "\nStats:\n" << endl;
+	cout << "Eliminations: " << TEC << endl;
+	cout << "Swaps: " << TSC << endl;
+	cout << "Draws: " << TDC << endl;
+	cout << "Turns: " << playerTurn << endl;
+
+	cout << "\nPer player:" << endl;
+
+	cout << "\nEliminations:" << endl;
+	for (int i = 1; i < Players.size(); i++) {
+		highest = Players.at(i); int j = i - 1;
+		while (j >= 0 && Players.at(j).EC < highest.EC) {
+			Players.at(j + 1) = Players.at(j); j--;
+		}
+		Players.at(j + 1) = highest;
+	}
+	cout << "1. " << Players.at(0).name << ", " << Players.at(0).EC << " eliminations." << endl;
+	cout << "2. " << Players.at(1).name << ", " << Players.at(1).EC << " eliminations." << endl;
+	cout << "3. " << Players.at(2).name << ", " << Players.at(2).EC << " eliminations." << endl;
+	cout << "4. " << Players.at(3).name << ", " << Players.at(3).EC << " eliminations." << endl;
+
+	cout << "\nSwaps:" << endl;
+	for (int i = 1; i < Players.size(); i++) {
+		highest = Players.at(i); int j = i - 1;
+		while (j >= 0 && Players.at(j).SC < highest.SC) {
+			Players.at(j + 1) = Players.at(j); j--;
+		}
+		Players.at(j + 1) = highest;
+	}
+	cout << "1. " << Players.at(0).name << ", " << Players.at(0).SC << " swaps." << endl;
+	cout << "2. " << Players.at(1).name << ", " << Players.at(1).SC << " swaps." << endl;
+	cout << "3. " << Players.at(2).name << ", " << Players.at(2).SC << " swaps." << endl;
+	cout << "4. " << Players.at(3).name << ", " << Players.at(3).SC << " swaps." << endl;
+	
+	cout << "\nDraws:" << endl;
+	for (int i = 1; i < Players.size(); i++) {
+		highest = Players.at(i); int j = i - 1;
+		while (j >= 0 && Players.at(j).DC < highest.DC) {
+			Players.at(j + 1) = Players.at(j); j--;
+		}
+		Players.at(j + 1) = highest;
+	}
+	cout << "1. " << Players.at(0).name << ", " << Players.at(0).DC << " draws." << endl;
+	cout << "2. " << Players.at(1).name << ", " << Players.at(1).DC << " draws." << endl;
+	cout << "3. " << Players.at(2).name << ", " << Players.at(2).DC << " draws." << endl;
+	cout << "4. " << Players.at(3).name << ", " << Players.at(3).DC << " draws." << endl;
+}
+
+void tiebreaker(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& Deck, int& tieToggle, int& playerTurn) {
 	int count = 0; int start = 0; bool tie = false; vector<Player> Players{P1, P2, P3, P4}; Player lowest;
 
 	for (int i = 1; i < Players.size(); i++) {
@@ -1141,7 +1218,7 @@ void tiebreaker(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& De
 	}
 
 	if (tie) { 
-		tiebreaker(P1, P2, P3, P4, Deck, tieToggle); 
+		tiebreaker(P1, P2, P3, P4, Deck, tieToggle, playerTurn); 
 	}
 
 	else {
@@ -1179,10 +1256,13 @@ void tiebreaker(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& De
 
 		cout << "\nTherefore, our winner is " << Players.at(0).name << "!" << endl;
 		cout << "\nThank you for playing, I hope you had fun!" << endl;
+
+		cout << "\nIf you're interested, we have the stats from this game listed below." << endl;
+		stats(P1, P2, P3, P4, playerTurn);
 	}
 }
 
-void winner(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& Deck, int& tieToggle) {
+void winner(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& Deck, int& tieToggle, int& playerTurn) {
 	Player lowest; vector<Player> Players{P1, P2, P3, P4};
 
 	cout << "\nNow that the game is over, let's add up the totals." << endl;
@@ -1191,7 +1271,7 @@ void winner(Player& P1, Player& P2, Player& P3, Player& P4, vector<Card>& Deck, 
 	cout << "\nPlayer 3 has "; printPoints(P3.Hand, P3.totalPoints);
 	cout << "\nPlayer 4 has "; printPoints(P4.Hand, P4.totalPoints);
 
-	tiebreaker(P1, P2, P3, P4, Deck, tieToggle);
+	tiebreaker(P1, P2, P3, P4, Deck, tieToggle, playerTurn);
 }
 
 void finalRound(int& wait, int& playerTurn, int& position1, int& position2, string& SorM, bool& knock, vector<Card>& Deck, vector<Card>& Stack, Player& P1, Player& P2, Player& P3, Player& P4) {
@@ -1243,7 +1323,7 @@ int main() {
 
 	vector<Player> Players{P1, P2, P3, P4}; vector<Card> Stack; srand(time(NULL));
 
-	bool knock = false; int tieToggle = 0; int playerTurn = 0; int wait = 0; string SorM = "";
+	bool knock = false; int tieToggle = 0; int playerTurn = 0; int wait = 0; int position1 = 0; int position2 = 0;  string SorM = "";
 
 	for (int i = 0; i < Deck.size(); i++) {
 		Deck.at(i).knownToP1 = false;
@@ -1259,16 +1339,11 @@ int main() {
 	cout << "\nYou can either play single player, against AI players, or hotseat multiplayer, where everyone takes turns on this computer. (Type \"S\" or \"M\".)" << endl;
 
 	cin >> SorM;
+	
+	if (answerCompare(SorM, "S")) { P2.isAI = true; P3.isAI = true; P4.isAI = true; }
 
-	if (SorM == "S") { P2.isAI = true; P3.isAI = true; P4.isAI = true; }
-
-	cout << "\nPick which two cards you would like to look at from your hand. (Type the position of the cards as a digit, with a space between them.)" << endl;
-
-	int position1, position2; cin >> position1 >> position2; position1--; position2--;
-
-	P1.Hand.at(position1).knownToP1 = true; P1.Hand.at(position2).knownToP1 = true;
-
-	cout << "\nHere are your (known) cards:" << endl; P1.printHand(P1.name);
+	// Comment below when done testing
+	// if (answerCompare(SorM, "A")) { P1.isAI = true; P2.isAI = true; P3.isAI = true; P4.isAI = true; }
 
 	while (!knock) {
 		cout << "\nTurn " << playerTurn + 1 << endl;
@@ -1305,7 +1380,7 @@ int main() {
 
 	finalRound(wait, playerTurn, position1, position2, SorM, knock, Deck, Stack, P1, P2, P3, P4);
 
-	winner(P1, P2, P3, P4, Deck, tieToggle);
+	winner(P1, P2, P3, P4, Deck, tieToggle, playerTurn);
 	
 	return 0;
 }
