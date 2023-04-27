@@ -879,11 +879,11 @@ class Player {
 			
 			if (playerTurn == 0) { answer = "D"; }
 
-			if (answerCompare(answer, "E")) { eliminateCard(Stack, Deck, knock, wait); }
+			if (answerCompare(answer, "E")) { eliminateCard(Stack, Deck, knock, wait); EC++; }
 			
-			else if (answerCompare(answer, "S")) { swapCard(Stack, knock, wait); }
+			else if (answerCompare(answer, "S")) { swapCard(Stack, knock, wait); SC++; }
 
-			else if (answerCompare(answer, "D")) { drawCard(Deck, Stack, knock, wait, P1, P2, P3, P4); }
+			else if (answerCompare(answer, "D")) { drawCard(Deck, Stack, knock, wait, P1, P2, P3, P4); DC++; }
 			
 			else {
 				knock = true; cout << "\n" << name << " has knocked. This is the final round." << endl;
