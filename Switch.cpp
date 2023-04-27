@@ -8,7 +8,7 @@
 #include <cstring>
 using namespace std;
 
-// Main
+// Test
 
 class Card {
 	public:
@@ -1343,7 +1343,7 @@ int main() {
 	if (answerCompare(SorM, "S")) { P2.isAI = true; P3.isAI = true; P4.isAI = true; }
 
 	// Comment below when done testing
-	// if (answerCompare(SorM, "A")) { P1.isAI = true; P2.isAI = true; P3.isAI = true; P4.isAI = true; }
+	if (answerCompare(SorM, "A")) { P1.isAI = true; P2.isAI = true; P3.isAI = true; P4.isAI = true; }
 
 	while (!knock) {
 		cout << "\nTurn " << playerTurn + 1 << endl;
