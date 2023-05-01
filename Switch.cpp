@@ -877,7 +877,7 @@ class Player {
 				if (isAI) { AI(knock, wait, playerTurn); } else { cin >> answer; } 
 			}
 			
-			if (playerTurn == 0) { answer = "D"; }
+			if (playerTurn == 0) { answer = "D"; DC++;}
 
 			if (answerCompare(answer, "E")) { eliminateCard(Stack, Deck, knock, wait); EC++; }
 			
