@@ -1,8 +1,8 @@
 #include <iostream>
 #include <algorithm>
 #include <cstdlib>
-#include <vector>
 #include <iterator>
+#include <vector>
 #include <random>
 #include <unistd.h>
 #include <time.h>
