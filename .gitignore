@@ -6,4 +6,6 @@
 *.dSYM
 *.exe
 *.code-workspace
-Switch Bot/*
+Switch Bot/.DS_Store
+Switch Bot/Switch.cpp
+Switch Bot/deps
