@@ -3,7 +3,8 @@
 !*/
 /.DS_Store
 /.vscode
-/.Switch\ Bot
 *.dSYM
 *.exe
 *.code-workspace
+Switch Bot/.DS_Store
+Switch Bot/Switch.cpp
