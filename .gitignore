@@ -3,6 +3,7 @@
 !*/
 /.DS_Store
 /.vscode
+/.Switch\ Bot
 *.dSYM
 *.exe
 *.code-workspace
