@@ -410,7 +410,6 @@ class Player {
 		}
 		
 		void switchNT(int& player, int& card, string& viewer, Player& P1, Player& P2, Player& P3, Player& P4) {
-			Card Temp;
 			switch (player) {
 				case 1:
 					if (viewer == "Player 2") { P1.Hand.at(card).knownToP2 = true; }
@@ -419,7 +418,7 @@ class Player {
 
 					if (viewer == "Player 4") { P1.Hand.at(card).knownToP4 = true; }
 					
-					printCard(Temp, viewer); 
+					printCard(P1.Hand.at(card), viewer); 
 					break;
 				
 				case 2:
@@ -429,7 +428,7 @@ class Player {
 
 					if (viewer == "Player 4") { P2.Hand.at(card).knownToP4 = true; }
 					
-					printCard(Temp, viewer); 
+					printCard(P2.Hand.at(card), viewer); 
 					break;
 				
 				case 3:
@@ -439,7 +438,7 @@ class Player {
 					
 					if (viewer == "Player 4") { P3.Hand.at(card).knownToP4 = true; }
 					
-					printCard(Temp, viewer); 
+					printCard(P3.Hand.at(card), viewer); 
 					break;
 				
 				case 4:
@@ -449,7 +448,7 @@ class Player {
 
 					if (viewer == "Player 3") { P4.Hand.at(card).knownToP3 = true; }
 					
-					printCard(Temp, viewer);
+					printCard(P4.Hand.at(card), viewer);
 					break;
 				
 				default:
